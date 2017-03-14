@@ -1,7 +1,5 @@
 package ru.stqa.pft.sandbox1;
 
-import javafx.scene.effect.Light;
-
 public class MyTaskPartTwo {
 
   public static void main(String[] args) {
@@ -12,7 +10,7 @@ public class MyTaskPartTwo {
     Point p2 = new Point(10, 10);
 
     System.out.println("Координаты точек, 1-й У=[" +p1.y + "] Х=[" + p1.x + "] 2-й У=[" + p2.y + "] Х=[" + p2.x+
-            "] Расстояние: = " + p1.Distance(p2));
+            "] Расстояние: = " + p1.distance(p2));
    }
 
    // функция вычислеия расстояния

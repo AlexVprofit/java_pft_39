@@ -11,16 +11,11 @@ public class Point {
   }
 
   // Метод
-  double Distance(double y, double x) {
+  double distance(Point p) {
 
-    double yy = this.y - y;
-    double xx = this.x - x;
-    return  Math.sqrt(yy*yy +xx*xx);
-  }
-
-  double Distance(Point p) {
-
-    return Distance(p.y, p.x);
+    double yy = this.y - p.y;
+    double xx = this.x - p.x;
+    return  Math.sqrt(yy*yy + xx*xx);
   }
 
 }
