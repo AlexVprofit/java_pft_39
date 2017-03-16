@@ -6,8 +6,8 @@ public class MyTaskPartTwo {
 
     System.out.println("Решение задачи: Нахождение расстояния между двумя точками на двумерной плоскости");
 
-    Point p1 = new Point(5, 5);
-    Point p2 = new Point(10, 10);
+    Point p1 = new Point(0, 5);
+    Point p2 = new Point(0, 15);
 
     System.out.println("Координаты точек, 1-й У=[" +p1.y + "] Х=[" + p1.x + "] 2-й У=[" + p2.y + "] Х=[" + p2.x+
             "] Расстояние: = " + p1.distance(p2));
