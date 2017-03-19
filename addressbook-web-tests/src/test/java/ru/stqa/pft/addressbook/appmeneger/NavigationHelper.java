@@ -19,5 +19,7 @@ public class NavigationHelper extends HelperBase {
   public void menuHome() {
     click(By.linkText("home"));
   }
-
+  public void submitPublicModification() {
+    click(By.name("update"));
+  }
 }
