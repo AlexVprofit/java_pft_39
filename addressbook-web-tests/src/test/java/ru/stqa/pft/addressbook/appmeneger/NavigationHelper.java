@@ -3,6 +3,8 @@ package ru.stqa.pft.addressbook.appmeneger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by LEN on 19.03.2017.
  */
