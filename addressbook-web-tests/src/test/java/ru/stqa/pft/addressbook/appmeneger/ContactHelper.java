@@ -50,8 +50,9 @@ public class ContactHelper extends HelperBase {
   }
 
   public void confirmationDeleteContact() {
+    wd.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
     wd.switchTo().alert().accept();
-    wd.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+    wd.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
   }
 
   public void deleteStringContact() {
