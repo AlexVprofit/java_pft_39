@@ -60,4 +60,5 @@ public class ApplicationMeneger {
   public ContactHelper getContactHelper() {
     return contactHelper;
   }
+
 }

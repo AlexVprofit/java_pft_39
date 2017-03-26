@@ -15,12 +15,16 @@ public class ContactModificationTests extends TestBase {
      * Для  [Update] метод [ submitPublicModification ] в класс getNavigationHelper() был добавлен ранее
      */
     app.getNavigationHelper().menuHome();
+    if(! app.getContactHelper().isThereAContact() ) {
+      app.getContactHelper().gotoAddNew();
+      app.getContactHelper().createContact(new ContactData("Alex", "Alexbond", "Title",
+              "Education", "new adress", "12345", "test1"), true);
+    }
     app.getContactHelper().selectStringContact();
     app.getContactHelper().initContactModification();
     app.getContactHelper().fillAddNewFormContact(new ContactData("Alex", "Alexbond", "Title",
-            "Education", "new adress FOR VERIFICATION",
-            "12345", null), false
-    );
+            "Education", "new adress FOR VERIFICATION 1",
+            "12345", null), false);
     app.getNavigationHelper().submitPublicModification();
   }
 }
