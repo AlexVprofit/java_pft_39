@@ -3,6 +3,7 @@ package ru.stqa.pft.addressbook.appmeneger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.appmeneger.NavigationHelper;
 
 /**
  * Created by LEN on 19.03.2017.
@@ -52,5 +53,13 @@ public class GroupHelper extends HelperBase {
 
   public boolean isThereAGroup() {
     return  isElementPresent(By.name("selected[]"));
+  }
+
+  public void checkGroup(GroupData data) {
+    new NavigationHelper(wd).gotoGroupPage();
+    if (! isThereAGroup()) {
+      createGroup(data);
+    }
+
   }
 }
