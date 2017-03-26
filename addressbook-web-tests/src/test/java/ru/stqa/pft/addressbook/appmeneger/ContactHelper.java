@@ -1,16 +1,10 @@
 package ru.stqa.pft.addressbook.appmeneger;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by LEN on 19.03.2017.
@@ -67,42 +61,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void confirmationDeleteContact() {
-//    wd.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
-//    Alert alert = (new WebDriverWait(wd, 45)).until(ExpectedConditions.alertIsPresent());
-//    wd.switchTo().alert().accept();
-//    wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-
-    int tries = 0;
-    int maxTries = 30;
-    while (tries < maxTries) {
-      tries++;
-
-      try {
-        disableImplicityWait();
-        Alert alert = wd.switchTo().alert();
-        if (alert != null && alert.getText().length() > 1) {
-          alert.accept();
-          enableImplicityWait();
-          return;
-        }
-
-      } catch (Exception e) {
-        e.getSuppressed();
-      }
-    }
-
+    wd.switchTo().alert().accept();
   }
-//
-
-  private void disableImplicityWait() {
-    wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-  }
-
-  private void enableImplicityWait() {
-    wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-  }
-
-//
-
 
 }

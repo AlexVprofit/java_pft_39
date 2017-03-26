@@ -17,10 +17,10 @@ public class ContactModificationTests extends TestBase {
     app.getNavigationHelper().menuHome();
     app.getContactHelper().selectStringContact();
     app.getContactHelper().initContactModification();
-    app.getContactHelper().fillAddNewFormContact(new ContactData("Alex","Alexbond", "Title",
-                    "Education","new adress FOR VERIFICATION",
-                    "12345", null),false
-            );
+    app.getContactHelper().fillAddNewFormContact(new ContactData("Alex", "Alexbond", "Title",
+            "Education", "new adress FOR VERIFICATION",
+            "12345", null), false
+    );
     app.getNavigationHelper().submitPublicModification();
   }
 }
