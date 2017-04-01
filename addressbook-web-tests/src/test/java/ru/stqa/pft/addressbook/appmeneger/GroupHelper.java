@@ -55,11 +55,16 @@ public class GroupHelper extends HelperBase {
     return  isElementPresent(By.name("selected[]"));
   }
 
-  public void checkGroup(GroupData data) {
+  public boolean checkGroup(GroupData data) {
     new NavigationHelper(wd).gotoGroupPage();
     if (! isThereAGroup()) {
       createGroup(data);
+      return true;
     }
+    return false;
+  }
 
+  public int getGroupCount() {
+    return wd.findElements(By.name("selected[]")).size();
   }
 }

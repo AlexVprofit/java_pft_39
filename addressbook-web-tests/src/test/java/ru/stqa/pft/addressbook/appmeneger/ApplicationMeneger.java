@@ -30,6 +30,8 @@ public class ApplicationMeneger {
   public void init() {
     if (Objects.equals(browser, BrowserType.FIREFOX)) {
       wd = new FirefoxDriver();
+      //  это памятка как пример завел
+
     } else if (Objects.equals(browser, BrowserType.CHROME)) {
       wd = new ChromeDriver();
     } else if (Objects.equals(browser, BrowserType.IE)) {
