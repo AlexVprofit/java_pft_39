@@ -27,7 +27,7 @@ public class ContactModificationTests extends TestBase {
               "Education", "new adress", "12345", "test1"), true);
       before++;
     }
-    app.getContactHelper().selectStringContact();
+    app.getContactHelper().selectStringContact(before -1);
     app.getContactHelper().initContactModification();
     app.getContactHelper().fillAddNewFormContact(new ContactData("Alex", "Alexbond", "Title",
             "Education", "new adress FOR VERIFICATION 1",

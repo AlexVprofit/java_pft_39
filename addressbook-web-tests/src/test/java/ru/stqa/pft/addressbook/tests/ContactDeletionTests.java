@@ -21,7 +21,7 @@ public class ContactDeletionTests extends TestBase {
        before++;      // При проверке выяснилось отсутствие контакта, его создали и  before++
      }
      // Процедура выбора адреса и его удаление
-    app.getContactHelper().selectStringContact();
+    app.getContactHelper().selectStringContact(before -1);
     app.getContactHelper().deleteStringContact();
     app.getContactHelper().confirmationDeleteContact();
     app.getNavigationHelper().menuHome();

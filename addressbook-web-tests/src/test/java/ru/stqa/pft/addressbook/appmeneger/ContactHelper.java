@@ -1,9 +1,6 @@
 package ru.stqa.pft.addressbook.appmeneger;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -16,6 +13,8 @@ import java.util.concurrent.TimeUnit;
  * Created by LEN on 19.03.2017.
  */
 public class ContactHelper extends HelperBase {
+
+  private WebElement element;
 
   public ContactHelper(WebDriver wd) {
     super(wd);
@@ -56,10 +55,20 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
   }
 
-  public void selectStringContact() {
+  public void selectStringContact(int index) {
+    element = wd.findElements(By.name("selected[]")).get(index);
+    element.isSelected();
+    if ( !element.isSelected() ) {
+      element.click();
+    }
+/*
+    if ( !wd.findElements(By.name("selected[]")).get(index).isSelected() ) {
+      wd.findElements(By.name("selected[]")).get(index).click();
+    }*/
+/*
     if (!wd.findElement(By.name("selected[]")).isSelected()) {
       click(By.name("selected[]"));
-    }
+    } */
   }
 
   public void initContactModification() {
