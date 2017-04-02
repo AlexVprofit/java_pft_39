@@ -7,7 +7,7 @@ import ru.stqa.pft.addressbook.appmeneger.ApplicationMeneger;
 
 public class TestBase {
 
-  protected final ApplicationMeneger app = new ApplicationMeneger(BrowserType.CHROME);
+  protected final ApplicationMeneger app = new ApplicationMeneger(BrowserType.FIREFOX);
 
   @BeforeMethod
   public void setUp() throws Exception {
