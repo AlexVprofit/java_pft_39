@@ -15,14 +15,14 @@ public class ContactDeletionTests extends TestBase {
     app.getGroupHelper().checkGroup(new GroupData("test1", null, null));
     // Проверка наличия хоть  одного адреса
     app.getNavigationHelper().menuHome();
-     if(! app.getContactHelper().isThereAContact() ) {
-       app.getContactHelper().gotoAddNew();
-       app.getContactHelper().createContact(new ContactData("Alex", "Alexbond", "Title",
-               "Education", "new adress", "12345", "test1"), true);
-     }
+    if (!app.getContactHelper().isThereAContact()) {
+      app.getContactHelper().gotoAddNew();
+      app.getContactHelper().createContact(new ContactData("Alex", "Alexbond", "Title",
+              "Education", "new adress", "12345", "test1"), true);
+    }
     List<ContactData> before = app.getContactHelper().getContactList();
-     // Процедура выбора адреса и его удаление
-    app.getContactHelper().selectStringContact(before.size() -1);
+    // Процедура выбора адреса и его удаление
+    app.getContactHelper().selectStringContact(before.size() - 1);
     app.getContactHelper().deleteStringContact();
     app.getContactHelper().confirmationDeleteContact();
     app.getNavigationHelper().menuHome();

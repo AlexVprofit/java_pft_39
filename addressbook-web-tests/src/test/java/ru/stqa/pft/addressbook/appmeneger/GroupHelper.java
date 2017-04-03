@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.GroupData;
-import ru.stqa.pft.addressbook.appmeneger.NavigationHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,12 +55,12 @@ public class GroupHelper extends HelperBase {
   }
 
   public boolean isThereAGroup() {
-    return  isElementPresent(By.name("selected[]"));
+    return isElementPresent(By.name("selected[]"));
   }
 
   public boolean checkGroup(GroupData data) {
     new NavigationHelper(wd).gotoGroupPage();
-    if (! isThereAGroup()) {
+    if (!isThereAGroup()) {
       createGroup(data);
       return true;
     }

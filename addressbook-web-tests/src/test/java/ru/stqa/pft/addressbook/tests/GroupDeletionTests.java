@@ -21,11 +21,11 @@ public class GroupDeletionTests extends TestBase {
     List<GroupData> after = app.getGroupHelper().getGroupList();
 
     // Сравнение размеров списков
-    Assert.assertEquals(after.size(),before.size() - 1);
+    Assert.assertEquals(after.size(), before.size() - 1);
 
     before.remove(before.size() - 1);
     // Сравнение списков  до и после удаления
-      Assert.assertEquals(before, after);
+    Assert.assertEquals(before, after);
 
   }
 
