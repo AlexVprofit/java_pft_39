@@ -73,8 +73,13 @@ public class ContactHelper extends HelperBase {
     } */
   }
 
-  public void initContactModification() {
-    click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+  public void initContactModification(int index) {
+    element = wd.findElements(By.cssSelector("img[title*='Edit']")).get(index);
+    element.isSelected();
+    if (!element.isSelected()) {
+      element.click();
+
+    }
   }
 
   public void confirmationDeleteContact() {
@@ -100,9 +105,16 @@ public class ContactHelper extends HelperBase {
     List<ContactData> contacts = new ArrayList<ContactData>();
     List<WebElement> elements = wd.findElements(By.name("entry"));
     for (WebElement element : elements) {
-      String name = element.getText();
-      ContactData contact = new ContactData(null, name, null, null, null,
-              null, null );
+     // Преобразование строчного значения в число
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+      List<WebElement> cells = element.findElements(By.tagName("td"));
+      String lastname = cells.get(1).getText();
+      String firstname = cells.get(2).getText();
+      String new_adress = cells.get(3).getText();
+      String telhome = cells.get(5).getText();
+
+     ContactData contact = new ContactData(id, firstname, lastname, null, null, new_adress,
+              telhome, null );
       contacts.add(contact);
     }
     return contacts;

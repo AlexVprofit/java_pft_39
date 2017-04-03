@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
+  private int id;
   private final String firstname;
   private final String lastname;
   private final String title;
@@ -11,6 +12,8 @@ public class ContactData {
 
   public ContactData(String firstname, String lastname, String title, String company, String new_adress,
                      String telhome, String group) {
+
+    this.id = 0;
     this.firstname = firstname;
     this.lastname = lastname;
     this.title = title;
@@ -19,6 +22,26 @@ public class ContactData {
     this.telhome = telhome;
     this.group = group;
   }
+
+  public ContactData(int id, String firstname, String lastname, String title, String company, String new_adress,
+                     String telhome, String group) {
+    this.id = id;
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.title = title;
+    this.company = company;
+    this.new_adress = new_adress;
+    this.telhome = telhome;
+    this.group = group;
+  }
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
 
   public String getFirstname() {
     return firstname;
@@ -48,21 +71,17 @@ public class ContactData {
     return group;
   }
 
-  // Преобразование в строку (для получения текстового представления элементов вместо цифрового)
   @Override
   public String toString() {
     return "ContactData{" +
-            "firstname='" + firstname + '\'' +
+            "id='" + id + '\'' +
+            ", firstname='" + firstname + '\'' +
             ", lastname='" + lastname + '\'' +
-            ", title='" + title + '\'' +
-            ", company='" + company + '\'' +
             ", new_adress='" + new_adress + '\'' +
             ", telhome='" + telhome + '\'' +
-            ", group='" + group + '\'' +
             '}';
   }
 
-  // Формирование правил сравнения объектов для контакта(свой метод описываем equals т.к. он ещё не был описан)
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -70,24 +89,21 @@ public class ContactData {
 
     ContactData that = (ContactData) o;
 
+    if (id != that.id) return false;
     if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
     if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
-    if (title != null ? !title.equals(that.title) : that.title != null) return false;
-    if (company != null ? !company.equals(that.company) : that.company != null) return false;
     if (new_adress != null ? !new_adress.equals(that.new_adress) : that.new_adress != null) return false;
-    if (telhome != null ? !telhome.equals(that.telhome) : that.telhome != null) return false;
-    return group != null ? group.equals(that.group) : that.group == null;
+    return telhome != null ? telhome.equals(that.telhome) : that.telhome == null;
   }
 
   @Override
   public int hashCode() {
-    int result = firstname != null ? firstname.hashCode() : 0;
+    int result = id;
+    result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
     result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-    result = 31 * result + (title != null ? title.hashCode() : 0);
-    result = 31 * result + (company != null ? company.hashCode() : 0);
     result = 31 * result + (new_adress != null ? new_adress.hashCode() : 0);
     result = 31 * result + (telhome != null ? telhome.hashCode() : 0);
-    result = 31 * result + (group != null ? group.hashCode() : 0);
     return result;
   }
+
 }

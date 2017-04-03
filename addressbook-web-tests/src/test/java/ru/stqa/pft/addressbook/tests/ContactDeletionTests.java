@@ -27,10 +27,12 @@ public class ContactDeletionTests extends TestBase {
     app.getContactHelper().confirmationDeleteContact();
     app.getNavigationHelper().menuHome();
     List<ContactData> after = app.getContactHelper().getContactList();
+
+    // Сравнение размеров списков
     Assert.assertEquals(after.size(), before.size() - 1);
 
     before.remove(before.size() - 1);
+    // Сравнение списков  до и после удаления
     Assert.assertEquals(before, after);
-
   }
 }

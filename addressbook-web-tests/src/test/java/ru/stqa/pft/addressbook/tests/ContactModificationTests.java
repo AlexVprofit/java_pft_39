@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -28,14 +29,23 @@ public class ContactModificationTests extends TestBase {
               "Education", "new adress", "12345", "test1"), true);
     }
     List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().selectStringContact(before.size() -1);
-    app.getContactHelper().initContactModification();
-    app.getContactHelper().fillAddNewFormContact(new ContactData("Alex", "Alexbond", "Title",
+    app.getContactHelper().selectStringContact(before.size() - 1);
+    app.getContactHelper().initContactModification(before.size() - 1);
+    ContactData contact = new ContactData(before.get(before.size() - 1).getId(),"Alex", "Alexbond", "Title",
             "Education", "new adress FOR VERIFICATION 1",
-            "12345", null), false);
+            "12345", null);
+    app.getContactHelper().fillAddNewFormContact(contact, false);
     app.getNavigationHelper().submitPublicModification();
     app.getNavigationHelper().menuHome();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
+
+    // Для логики/красоты удаляем предыдущий список и записываем модифицированный список
+    before.remove(before.size() - 1);
+    before.add(contact);
+
+    // Преобразование списков в множества (что бы сравнивать не задумываясь о порядке средования строк при сравнении)
+    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+
   }
 }
