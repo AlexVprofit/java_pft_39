@@ -8,12 +8,11 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * Created by LEN on 19.03.2017.
- */
+
 public class ContactModificationTests extends TestBase {
 
-  @Test
+  @Test(enabled = false)
+  //@Test
   public void testContactModification() {
     /**  Добавлен  вспомогательный метод [ initContactModification ] для [Edit contact] в классе getContactHelper()
      *  Примечание:

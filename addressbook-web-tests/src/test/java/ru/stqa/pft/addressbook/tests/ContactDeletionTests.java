@@ -9,7 +9,8 @@ import java.util.List;
 
 public class ContactDeletionTests extends TestBase {
 
-  @Test
+  @Test(enabled = false)
+  //@Test
   public void testContactDeletion() {
     // Проверка наличия хоть одной группы
     app.getGroupHelper().checkGroup(new GroupData("test1", null, null));

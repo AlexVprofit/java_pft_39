@@ -11,7 +11,8 @@ import java.util.List;
 
 public class NewContactCreationTest extends TestBase {
 
-  @Test
+  @Test(enabled = false)
+  //@Test
   public void testNewContactCreation() {
     app.getNavigationHelper().menuHome();
     List<ContactData> before = app.getContactHelper().getContactList();
