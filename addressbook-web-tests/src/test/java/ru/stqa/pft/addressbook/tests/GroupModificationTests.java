@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
@@ -13,27 +14,27 @@ import java.util.List;
  */
 public class GroupModificationTests extends TestBase {
 
-  @Test
-  public void testGroupModification() {
-    /**  Добавлены два вспомогательных метода для [Edit group] и [Update]
-     * [ initGroupModification ] &  [ submitPublicModification ] в классах getGroupHelper(),  getNavigationHelper()
-     */
+  // Инициализация - Подготовка состояния
+  @BeforeMethod
+  public void ensurePreconditions() {
     app.getNavigationHelper().gotoGroupPage();
+    // Предусловие Проверка наличия хоть одной группы
     // Если при проверке выясниться, что групп нет, то будет созданна группа
     app.getGroupHelper().checkGroup(new GroupData("test1", null, null));
+  }
+
+  @Test
+  public void testGroupModification() {
     List<GroupData> before = app.getGroupHelper().getGroupList();
-    app.getGroupHelper().selectGroup(before.size() - 1);
-    app.getGroupHelper().initGroupModification();
-    GroupData group = new GroupData(before.get(before.size() - 1).getId(), "test1",
+    int index = before.size() - 1;
+    GroupData group = new GroupData(before.get(index).getId(), "test1",
             "test2 FOR VERIFICATION", "test3");
-    app.getGroupHelper().fillGroupForm(group);
-    app.getNavigationHelper().submitPublicModification();
-    app.getGroupHelper().returnToGroupPage();
+    app.getGroupHelper().modifyGroup(index, group);
     List<GroupData> after = app.getGroupHelper().getGroupList();
     Assert.assertEquals(after.size(), before.size());
 
     // Для логики/красоты удаляем предыдущий список и записываем модифицированный список
-    before.remove(before.size() - 1);
+    before.remove(index);
     before.add(group);
 
     // Сортировка спискков ( до и после создания )
@@ -48,4 +49,5 @@ public class GroupModificationTests extends TestBase {
     // Теперь в преобразовании нет необходимости
     Assert.assertEquals(before, after);
   }
+
 }

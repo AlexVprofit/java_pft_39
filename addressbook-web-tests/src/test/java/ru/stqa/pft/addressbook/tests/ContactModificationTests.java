@@ -34,7 +34,7 @@ public class ContactModificationTests extends TestBase {
             "Education", "new adress FOR VERIFICATION 1",
             "12345", null);
     app.getContactHelper().fillAddNewFormContact(contact, false);
-    app.getNavigationHelper().submitPublicModification();
+    app.getGroupHelper().submitPublicModification();
     app.getNavigationHelper().menuHome();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());

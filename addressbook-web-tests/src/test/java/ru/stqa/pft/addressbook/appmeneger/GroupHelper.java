@@ -8,6 +8,7 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by LEN on 19.03.2017.
  */
@@ -54,6 +55,15 @@ public class GroupHelper extends HelperBase {
     returnToGroupPage();
   }
 
+  public void modifyGroup(int index, GroupData group) {
+    selectGroup(index);
+    initGroupModification();
+    fillGroupForm(group);
+    submitPublicModification();
+    returnToGroupPage();
+  }
+
+
   public boolean isThereAGroup() {
     return isElementPresent(By.name("selected[]"));
   }
@@ -83,5 +93,14 @@ public class GroupHelper extends HelperBase {
     }
 
     return groups;
+  }
+
+  public void submitPublicModification() {
+    if (isElementPresent(By.name("h1"))
+            && wd.findElement(By.tagName("h1")).getText().equals("Groups")
+            && isElementPresent(By.name("update"))) {
+      return;
+    }
+    click(By.name("update"));
   }
 }
