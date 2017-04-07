@@ -93,6 +93,7 @@ public class ContactHelper extends HelperBase {
   public void create(ContactData contact, boolean typ) {
     fillAddNewFormContact(contact, typ);
     inputAddNewFormContact();
+    groupCache = null;
     returnHomePage();
     refreshHomePage();
   }
@@ -103,6 +104,7 @@ public class ContactHelper extends HelperBase {
     initContactModificationById(contact.getId());
     fillAddNewFormContact(contact, false);
     submitPublicModification();
+    groupCache = null;
     goHome();
   }
 
@@ -110,6 +112,7 @@ public class ContactHelper extends HelperBase {
     selectStringContactById(contact.getId());
     deleteStringContact();
     confirmationDeleteContact();
+    groupCache = null;
     goHome();
   }
 
@@ -118,8 +121,14 @@ public class ContactHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
+  // КЭШ реализация
+  private Contacts groupCache = null;
+
   public Contacts all() {
-    Contacts contacts = new Contacts();
+    if (groupCache != null) {
+      return new Contacts(groupCache);
+    }
+    groupCache = new Contacts();
     List<WebElement> elements = wd.findElements(By.name("entry"));
     for (WebElement element : elements) {
       // Преобразование строчного значения в число
@@ -129,10 +138,10 @@ public class ContactHelper extends HelperBase {
       String firstname = cells.get(2).getText();
       String new_adress = cells.get(3).getText();
       String telhome = cells.get(5).getText();
-      contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
+      groupCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
               .withNew_adress(new_adress).withTelhome(telhome));
     }
-    return contacts;
+    return new Contacts(groupCache);
   }
 
 }
