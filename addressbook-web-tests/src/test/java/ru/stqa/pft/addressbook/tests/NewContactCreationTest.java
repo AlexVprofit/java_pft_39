@@ -3,24 +3,22 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class NewContactCreationTest extends TestBase {
 
-  @Test(enabled = false)
-  //@Test
+//  @Test(enabled = false)
+  @Test
   public void testNewContactCreation() {
-    app.getNavigationHelper().menuHome();
-    List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().gotoAddNew();
-    ContactData contact = new ContactData("Alex1", "Alexbond", "Title",
-            "Education", "new adress", "12345", "test1");
-    app.getContactHelper().createContact(contact, true);
-    List<ContactData> after = app.getContactHelper().getContactList();
+    app.goTo().goHome();
+    List<ContactData> before = app.contact().list();
+    ContactData contact = new ContactData().withFirstname("Alex1").withLastname("Alexbond").withTitle("Title")
+            .withCompany("Education").withNew_adress("new adress").withTelhome("12345").withGroup("test1");
+    app.contact().gotoAddNew();
+    app.contact().create(contact, true);
+    List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     before.add(contact);

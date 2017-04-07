@@ -50,4 +50,22 @@ public class HelperBase {
       return false;
     }
   }
+
+  public void submitPublicModification() {
+    if (isElementPresent(By.name("h1"))
+            && wd.findElement(By.tagName("h1")).getText().equals("Groups")
+            && isElementPresent(By.name("update"))) {
+      return;
+    }
+    click(By.name("update"));
+  }
+
+  public void goHome() {
+    if (isElementPresent(By.id("maintable"))) {
+      return;
+    }
+    click(By.linkText("home"));
+  }
+
+
 }

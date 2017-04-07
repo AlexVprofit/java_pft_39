@@ -48,18 +48,24 @@ public class GroupHelper extends HelperBase {
     click(By.name("edit"));
   }
 
-  public void createGroup(GroupData group) {
+  public void create(GroupData group) {
     initGroupCreation();
     fillGroupForm(group);
     submitGroupCreation();
     returnToGroupPage();
   }
 
-  public void modifyGroup(int index, GroupData group) {
+  public void modify(int index, GroupData group) {
     selectGroup(index);
     initGroupModification();
     fillGroupForm(group);
     submitPublicModification();
+    returnToGroupPage();
+  }
+
+  public void delete(int index) {
+    selectGroup(index);
+    deleteSelectedGroups();
     returnToGroupPage();
   }
 
@@ -68,10 +74,12 @@ public class GroupHelper extends HelperBase {
     return isElementPresent(By.name("selected[]"));
   }
 
-  public boolean checkGroup(GroupData data) {
-    new NavigationHelper(wd).gotoGroupPage();
-    if (!isThereAGroup()) {
-      createGroup(data);
+  public boolean check(GroupData data) {
+    new NavigationHelper(wd).groupPage();
+//    if (!isThereAGroup()) {
+    // Альтернативный вариант проверки наличия списка объектов GroupData
+    if (list().size() == 0) {
+      create(data);
       return true;
     }
     return false;
@@ -81,26 +89,17 @@ public class GroupHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public List<GroupData> getGroupList() {
+  public List<GroupData> list() {
     List<GroupData> groups = new ArrayList<GroupData>();
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
     for (WebElement element : elements) {
       String name = element.getText();
       // Преобразование строчного значения в число
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      GroupData group = new GroupData(id, name, null, null);
-      groups.add(group);
+      groups.add(new GroupData().withId(id).withName(name));
     }
 
     return groups;
   }
 
-  public void submitPublicModification() {
-    if (isElementPresent(By.name("h1"))
-            && wd.findElement(By.tagName("h1")).getText().equals("Groups")
-            && isElementPresent(By.name("update"))) {
-      return;
-    }
-    click(By.name("update"));
-  }
 }

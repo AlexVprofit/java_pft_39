@@ -1,46 +1,57 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
-  private int id;
-  private final String firstname;
-  private final String lastname;
-  private final String title;
-  private final String company;
-  private final String new_adress;
-  private final String telhome;
+  private int id = Integer.MAX_VALUE;
+  private String firstname;
+  private String lastname;
+  private String title;
+  private String company;
+  private String new_adress;
+  private String telhome;
   private String group;
-
-  public ContactData(String firstname, String lastname, String title, String company, String new_adress,
-                     String telhome, String group) {
-
-    this.id = Integer.MAX_VALUE;
-    this.firstname = firstname;
-    this.lastname = lastname;
-    this.title = title;
-    this.company = company;
-    this.new_adress = new_adress;
-    this.telhome = telhome;
-    this.group = group;
-  }
-
-  public ContactData(int id, String firstname, String lastname, String title, String company, String new_adress,
-                     String telhome, String group) {
-    this.id = id;
-    this.firstname = firstname;
-    this.lastname = lastname;
-    this.title = title;
-    this.company = company;
-    this.new_adress = new_adress;
-    this.telhome = telhome;
-    this.group = group;
-  }
 
   public int getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public ContactData withId(int id) {
     this.id = id;
+    return this;
+  }
+
+  public ContactData withFirstname(String firstname) {
+    this.firstname = firstname;
+    return this;
+  }
+
+  public ContactData withLastname(String lastname) {
+    this.lastname = lastname;
+    return this;
+  }
+
+  public ContactData withTitle(String title) {
+    this.title = title;
+    return this;
+  }
+
+  public ContactData withCompany(String company) {
+    this.company = company;
+    return this;
+  }
+
+  public ContactData withNew_adress(String new_adress) {
+    this.new_adress = new_adress;
+    return this;
+  }
+
+  public ContactData withTelhome(String telhome) {
+    this.telhome = telhome;
+    return this;
+  }
+
+  public ContactData withGroup(String group) {
+    this.group = group;
+    return this;
   }
 
 

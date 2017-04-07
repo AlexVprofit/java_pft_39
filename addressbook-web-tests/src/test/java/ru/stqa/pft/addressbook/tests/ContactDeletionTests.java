@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
@@ -9,31 +10,36 @@ import java.util.List;
 
 public class ContactDeletionTests extends TestBase {
 
-  @Test(enabled = false)
-  //@Test
-  public void testContactDeletion() {
+  // Инициализация локальная - Подготовка состояния
+  @BeforeMethod
+  public  void ensurePreconditions() {
     // Проверка наличия хоть одной группы
-    app.getGroupHelper().checkGroup(new GroupData("test1", null, null));
+    app.group().check(new GroupData().withName("test1"));
     // Проверка наличия хоть  одного адреса
-    app.getNavigationHelper().menuHome();
-    if (!app.getContactHelper().isThereAContact()) {
-      app.getContactHelper().gotoAddNew();
-      app.getContactHelper().createContact(new ContactData("Alex", "Alexbond", "Title",
-              "Education", "new adress", "12345", "test1"), true);
+    app.goTo().goHome();
+    if (app.contact().list().size() == 0) {
+      app.contact().gotoAddNew();
+      app.contact().create(new ContactData().withFirstname("Alex1").withLastname("Alexbond").withTitle("Title")
+              .withCompany("Education").withNew_adress("new adress").withTelhome("12345")
+              .withGroup("test1"), true);
     }
-    List<ContactData> before = app.getContactHelper().getContactList();
+  }
+
+  //  @Test(enabled = false)
+  @Test
+  public void testContactDeletion() {
+    List<ContactData> before = app.contact().list();
+    int index = before.size() - 1;
     // Процедура выбора адреса и его удаление
-    app.getContactHelper().selectStringContact(before.size() - 1);
-    app.getContactHelper().deleteStringContact();
-    app.getContactHelper().confirmationDeleteContact();
-    app.getNavigationHelper().menuHome();
-    List<ContactData> after = app.getContactHelper().getContactList();
+    app.contact().delete(index);
+    List<ContactData> after = app.contact().list();
 
     // Сравнение размеров списков
     Assert.assertEquals(after.size(), before.size() - 1);
 
-    before.remove(before.size() - 1);
+    before.remove(index);
     // Сравнение списков  до и после удаления
     Assert.assertEquals(before, after);
   }
+
 }

@@ -12,24 +12,23 @@ public class GroupDeletionTests extends TestBase {
   // Инициализация - Подготовка состояния
   @BeforeMethod
   public void ensurePreconditions() {
-    app.getNavigationHelper().gotoGroupPage();
+    app.goTo().groupPage();
     // Предусловие Проверка наличия хоть одной группы
     // Если при проверке выясниться, что групп нет, то будет созданна группа
-    app.getGroupHelper().checkGroup(new GroupData("test1", null, null));
+    app.group().check(new GroupData().withName("test1"));
   }
 
   @Test
   public void testGroupDeletion() {
-    List<GroupData> before = app.getGroupHelper().getGroupList();
-    app.getGroupHelper().selectGroup(before.size() - 1);
-    app.getGroupHelper().deleteSelectedGroups();
-    app.getGroupHelper().returnToGroupPage();
-    List<GroupData> after = app.getGroupHelper().getGroupList();
+    List<GroupData> before = app.group().list();
+    int index = before.size() - 1;
+    app.group().delete(index);
+    List<GroupData> after = app.group().list();
 
     // Сравнение размеров списков
     Assert.assertEquals(after.size(), before.size() - 1);
 
-    before.remove(before.size() - 1);
+    before.remove(index);
     // Сравнение списков  до и после удаления
     Assert.assertEquals(before, after);
 

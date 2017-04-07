@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
@@ -11,36 +12,33 @@ import java.util.List;
 
 public class ContactModificationTests extends TestBase {
 
-  @Test(enabled = false)
-  //@Test
-  public void testContactModification() {
-    /**  Добавлен  вспомогательный метод [ initContactModification ] для [Edit contact] в классе getContactHelper()
-     *  Примечание:
-     * Для  [Update] метод [ submitPublicModification ] в класс getNavigationHelper() был добавлен ранее
-     */
+  // Инициализация локальная - Подготовка состояния
+  @BeforeMethod
+public  void ensurePreconditions() {
     // Проверка наличия хоть одной группы
-    app.getGroupHelper().checkGroup(new GroupData("test1", null, null));
+    app.group().check(new GroupData().withName("test1"));
     // Проверка наличия хоть  одного адреса
-    app.getNavigationHelper().menuHome();
-    if (!app.getContactHelper().isThereAContact()) {
-      app.getContactHelper().gotoAddNew();
-      app.getContactHelper().createContact(new ContactData("Alex", "Alexbond", "Title",
-              "Education", "new adress", "12345", "test1"), true);
+    app.goTo().goHome();
+    if (app.contact().list().size() == 0) {
+      app.contact().gotoAddNew();
+      app.contact().create(new ContactData().withFirstname("Alex1").withLastname("Alexbond").withTitle("Title")
+              .withCompany("Education").withNew_adress("new adress").withTelhome("12345").withGroup("test1"), true);
     }
-    List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().selectStringContact(before.size() - 1);
-    app.getContactHelper().initContactModification(before.size() - 1);
-    ContactData contact = new ContactData(before.get(before.size() - 1).getId(), "Alex", "Alexbond", "Title",
-            "Education", "new adress FOR VERIFICATION 1",
-            "12345", null);
-    app.getContactHelper().fillAddNewFormContact(contact, false);
-    app.getGroupHelper().submitPublicModification();
-    app.getNavigationHelper().menuHome();
-    List<ContactData> after = app.getContactHelper().getContactList();
+  }
+
+//  @Test(enabled = false)
+  @Test
+  public void testContactModification() {
+    List<ContactData> before = app.contact().list();
+    int index = before.size() - 1;
+    ContactData contact = new ContactData().withFirstname("Alex").withLastname("Alexbond").withTitle("Title")
+            .withCompany("Education").withNew_adress("new adress FOR VERIFICATION 1").withTelhome("12345");
+    app.contact().modify(index, contact);
+    List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size());
 
     // Для логики/красоты удаляем предыдущий список и записываем модифицированный список
-    before.remove(before.size() - 1);
+    before.remove(index);
     before.add(contact);
 
     // Сортировка спискков ( до и после создания )
@@ -56,4 +54,5 @@ public class ContactModificationTests extends TestBase {
     Assert.assertEquals(before, after);
 
   }
+
 }

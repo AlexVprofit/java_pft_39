@@ -10,9 +10,6 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by LEN on 19.03.2017.
- */
 public class ContactHelper extends HelperBase {
 
   private WebElement element;
@@ -89,18 +86,36 @@ public class ContactHelper extends HelperBase {
     return isElementPresent(By.name("selected[]"));
   }
 
-  public void createContact(ContactData contact, boolean typ) {
+  public void create(ContactData contact, boolean typ) {
     fillAddNewFormContact(contact, typ);
     inputAddNewFormContact();
     returnHomePage();
     refreshHomePage();
   }
 
+  public void modify(int index, ContactData contact) {
+    // Процедура выбора адреса и его модификация
+    selectStringContact(index);
+    initContactModification(index);
+    fillAddNewFormContact(contact, false);
+    submitPublicModification();
+    goHome();
+  }
+
+  public void delete(int index) {
+    // Процедура выбора адреса и его удаление
+    selectStringContact(index);
+    deleteStringContact();
+    confirmationDeleteContact();
+    goHome();
+  }
+
+
   public int getContactCount() {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public List<ContactData> getContactList() {
+  public List<ContactData> list() {
     List<ContactData> contacts = new ArrayList<ContactData>();
     List<WebElement> elements = wd.findElements(By.name("entry"));
     for (WebElement element : elements) {
@@ -111,9 +126,8 @@ public class ContactHelper extends HelperBase {
       String firstname = cells.get(2).getText();
       String new_adress = cells.get(3).getText();
       String telhome = cells.get(5).getText();
-      ContactData contact = new ContactData(id, firstname, lastname, null, null, new_adress,
-              telhome, null);
-      contacts.add(contact);
+      contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
+              .withNew_adress(new_adress).withTelhome(telhome));
     }
     return contacts;
   }
