@@ -6,9 +6,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -59,24 +63,24 @@ public class ContactHelper extends HelperBase {
     if (!element.isSelected()) {
       element.click();
     }
-/*
-    if ( !wd.findElements(By.name("selected[]")).get(index).isSelected() ) {
-      wd.findElements(By.name("selected[]")).get(index).click();
-    }*/
-/*
-    if (!wd.findElement(By.name("selected[]")).isSelected()) {
-      click(By.name("selected[]"));
-    } */
   }
 
-  public void initContactModification(int index) {
-    element = wd.findElements(By.cssSelector("img[title*='Edit']")).get(index);
+  public void selectStringContactById(int id) {
+    element = wd.findElement(By.cssSelector("input[value='" + id + "']"));
     element.isSelected();
     if (!element.isSelected()) {
       element.click();
-
     }
   }
+
+  public void initContactModificationById(int id) {
+    element = wd.findElement(By.cssSelector("a[href='edit.php?id=" +  id + "']"));
+    element.isSelected();
+    if (!element.isSelected()) {
+      element.click();
+    }
+  }
+
 
   public void confirmationDeleteContact() {
     wd.switchTo().alert().accept();
@@ -93,18 +97,17 @@ public class ContactHelper extends HelperBase {
     refreshHomePage();
   }
 
-  public void modify(int index, ContactData contact) {
+  public void modify(ContactData contact) {
     // Процедура выбора адреса и его модификация
-    selectStringContact(index);
-    initContactModification(index);
+    selectStringContactById(contact.getId());
+    initContactModificationById(contact.getId());
     fillAddNewFormContact(contact, false);
     submitPublicModification();
     goHome();
   }
 
-  public void delete(int index) {
-    // Процедура выбора адреса и его удаление
-    selectStringContact(index);
+  public void delete(ContactData contact) {
+    selectStringContactById(contact.getId());
     deleteStringContact();
     confirmationDeleteContact();
     goHome();
@@ -115,8 +118,8 @@ public class ContactHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public List<ContactData> list() {
-    List<ContactData> contacts = new ArrayList<ContactData>();
+  public Contacts all() {
+    Contacts contacts = new Contacts();
     List<WebElement> elements = wd.findElements(By.name("entry"));
     for (WebElement element : elements) {
       // Преобразование строчного значения в число
@@ -131,4 +134,5 @@ public class ContactHelper extends HelperBase {
     }
     return contacts;
   }
+
 }

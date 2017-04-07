@@ -1,12 +1,18 @@
 package ru.stqa.pft.addressbook.tests;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by LEN on 19.03.2017.
@@ -24,29 +30,15 @@ public class GroupModificationTests extends TestBase {
 
   @Test
   public void testGroupModification() {
-    List<GroupData> before = app.group().list();
-    int index = before.size() - 1;
-    GroupData group = new GroupData().withId(before.get(index).getId())
+    Groups before = app.group().all();
+    GroupData modifyGroup = before.iterator().next();
+    GroupData group = new GroupData().withId(modifyGroup.getId())
             .withName("test1").withHeader("test2 FOR VERIFICATION").withFooter("test3");
-    app.group().modify(index, group);
-    List<GroupData> after = app.group().list();
-    Assert.assertEquals(after.size(), before.size());
+    app.group().modify(group);
+    Groups after = app.group().all();
+    assertEquals(after.size(), before.size());
 
-    // Для логики/красоты удаляем предыдущий список и записываем модифицированный список
-    before.remove(index);
-    before.add(group);
-
-    // Сортировка спискков ( до и после создания )
-    // Лямбда выражение: анонимная функция -> на входе два параметра, это две группы, а сравниваем 2 идентификатора
-    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
-
-    // Преобразование списков в множества (что бы сравнивать не задумываясь о порядке средования строк при сравнении)
-    /*Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));*/
-
-    // Теперь в преобразовании нет необходимости
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(before.without(modifyGroup).withAdded(group)));
   }
 
 }

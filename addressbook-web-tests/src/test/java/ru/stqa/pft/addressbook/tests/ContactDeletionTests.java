@@ -1,23 +1,25 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class ContactDeletionTests extends TestBase {
 
   // Инициализация локальная - Подготовка состояния
   @BeforeMethod
-  public  void ensurePreconditions() {
+  public void ensurePreconditions() {
     // Проверка наличия хоть одной группы
     app.group().check(new GroupData().withName("test1"));
     // Проверка наличия хоть  одного адреса
     app.goTo().goHome();
-    if (app.contact().list().size() == 0) {
+    if (app.contact().all().size() == 0) {
       app.contact().gotoAddNew();
       app.contact().create(new ContactData().withFirstname("Alex1").withLastname("Alexbond").withTitle("Title")
               .withCompany("Education").withNew_adress("new adress").withTelhome("12345")
@@ -28,18 +30,17 @@ public class ContactDeletionTests extends TestBase {
   //  @Test(enabled = false)
   @Test
   public void testContactDeletion() {
-    List<ContactData> before = app.contact().list();
-    int index = before.size() - 1;
+    Contacts before = app.contact().all();
+    //  получаем какой-нибудь элемент множества (т.е случайный)
+    ContactData deletedContact = before.iterator().next();
     // Процедура выбора адреса и его удаление
-    app.contact().delete(index);
-    List<ContactData> after = app.contact().list();
-
+    app.contact().delete(deletedContact);
+    Contacts after = app.contact().all();
     // Сравнение размеров списков
-    Assert.assertEquals(after.size(), before.size() - 1);
+    assertEquals(after.size(), before.size() - 1);
 
-    before.remove(index);
     // Сравнение списков  до и после удаления
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(before.without(deletedContact)));
   }
 
 }
