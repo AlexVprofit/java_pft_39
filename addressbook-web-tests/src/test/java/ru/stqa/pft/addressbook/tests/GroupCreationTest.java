@@ -15,12 +15,30 @@ public class GroupCreationTest extends TestBase {
     Groups before = app.group().all();
     GroupData group = new GroupData().withName("test2");
     app.group().create(group);
+    // ХЭШИРОВАНИЕ по размеру групп , если падает то дальше тест не выполняется
+    assertThat(app.group().count(), equalTo(before.size() + 1));
     Groups after = app.group().all();
-    assertThat(after.size(), equalTo(before.size() + 1));
 
     group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
 // Проверка двух объектов по Hamcrest
 //    MatcherAssert.assertThat(after, CoreMatchers.equalTo(before));
     assertThat(after, equalTo(before.withAdded(group)));
   }
+
+  // Негативный тест по неправильному имени  т.е с " ' "
+
+  @Test
+  public void testBadGroupCreation() {
+    app.goTo().groupPage();
+    Groups before = app.group().all();
+    GroupData group = new GroupData().withName("test'");
+    app.group().create(group);
+    // Группа не должна создаться
+    assertThat(app.group().count(), equalTo(before.size()));
+    Groups after = app.group().all();
+    assertThat(after, equalTo(before));
+  }
+
+
+
 }

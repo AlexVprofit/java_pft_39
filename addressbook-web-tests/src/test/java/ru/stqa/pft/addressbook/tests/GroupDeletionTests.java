@@ -31,10 +31,9 @@ public class GroupDeletionTests extends TestBase {
     // Извлекаем элемент из множества
     GroupData deletedGroup = before.iterator().next();
     app.group().delete(deletedGroup);
+    // ХЭШИРОВАНИЕ по размеру групп (Сравнение размеров списков) , если падает то дальше тест не выполняется
+    assertThat(app.group().count(), equalTo(before.size() - 1));
     Groups after = app.group().all();
-
-    // Сравнение размеров списков
-    assertEquals(after.size(), before.size() - 1);
 
     // Сравнение списков  до и после удаления
     assertThat(after, equalTo(before.without(deletedGroup)));

@@ -23,7 +23,7 @@ public class ContactModificationTests extends TestBase {
     if (app.contact().all().size() == 0) {
       app.contact().gotoAddNew();
       app.contact().create(new ContactData().withFirstname("Alex1").withLastname("Alexbond").withTitle("Title")
-              .withCompany("Education").withNew_adress("new adress").withTelhome("12345").withGroup("test1"), true);
+              .withCompany("Education").withNew_adress("new adress").withTelHome("12345").withGroup("test1"), true);
     }
   }
 
@@ -34,11 +34,11 @@ public class ContactModificationTests extends TestBase {
     //  получаем какой-нибудь элемент множества (т.е случайный)
     ContactData modifyContact = before.iterator().next();
     ContactData contact = new ContactData().withId(modifyContact.getId()).withFirstname("Alex").withLastname("Alexbond").withTitle("Title")
-            .withCompany("Education").withNew_adress("new adress FOR VERIFICATION 1").withTelhome("12345");
+            .withCompany("Education").withNew_adress("new adress FOR VERIFICATION 1").withTelHome("12345");
     app.contact().modify(contact);
+    // ХЭШИРОВАНИЕ по размеру групп , если падает то дальше тест не выполняется
+    assertThat(app.contact().сount(), equalTo(before.size()));
     Contacts after = app.contact().all();
-    assertEquals(after.size(), before.size());
-
     assertThat(after, equalTo(before.without(modifyContact).withAdded(contact)));
   }
 

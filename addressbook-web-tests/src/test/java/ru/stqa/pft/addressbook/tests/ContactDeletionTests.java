@@ -22,7 +22,7 @@ public class ContactDeletionTests extends TestBase {
     if (app.contact().all().size() == 0) {
       app.contact().gotoAddNew();
       app.contact().create(new ContactData().withFirstname("Alex1").withLastname("Alexbond").withTitle("Title")
-              .withCompany("Education").withNew_adress("new adress").withTelhome("12345")
+              .withCompany("Education").withNew_adress("new adress").withTelHome("12345")
               .withGroup("test1"), true);
     }
   }
@@ -35,10 +35,9 @@ public class ContactDeletionTests extends TestBase {
     ContactData deletedContact = before.iterator().next();
     // Процедура выбора адреса и его удаление
     app.contact().delete(deletedContact);
+    // ХЭШИРОВАНИЕ по размеру групп , если падает то дальше тест не выполняется
+    assertThat(app.contact().сount(), equalTo(before.size() - 1));
     Contacts after = app.contact().all();
-    // Сравнение размеров списков
-    assertEquals(after.size(), before.size() - 1);
-
     // Сравнение списков  до и после удаления
     assertThat(after, equalTo(before.without(deletedContact)));
   }
