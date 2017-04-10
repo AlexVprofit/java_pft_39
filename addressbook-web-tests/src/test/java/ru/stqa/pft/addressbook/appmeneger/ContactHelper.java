@@ -89,7 +89,7 @@ public class ContactHelper extends HelperBase {
   public void modify(ContactData contact) {
     // Процедура выбора адреса и его модификация
     selectStringContactById(contact.getId());
-    initContactModificationById(contact.getId());
+    initContactModificationById(contact.getId(), 7, 0);
     fillAddNewFormContact(contact, false);
     submitPublicModification();
     groupCache = null;
@@ -140,8 +140,17 @@ public class ContactHelper extends HelperBase {
     return new Contacts(groupCache);
   }
 
-  public ContactData infoFromEditForm(ContactData contact) {
-    initContactModificationById(contact.getId());
+
+  public ContactData allDetails(ContactData contact, int index) {
+    //  выбираем страницу с подробной информацией о контакте Details
+   initContactModificationById(contact.getId(),index,0);
+   String alldetails =wd.findElement(By.xpath("//*[@id='content']")).getText();
+    // возвращаем предварительно заполненную подробную информацию о Контакте
+    return new ContactData().withId(contact.getId()).withAllDetails(alldetails);
+  }
+
+  public ContactData infoFromEditForm(ContactData contact, int v) {
+    initContactModificationById(contact.getId(), 7, v);
     String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
     String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
     String address = wd.findElement(By.name("address")).getText();
@@ -154,10 +163,10 @@ public class ContactHelper extends HelperBase {
     String phone2Phone = wd.findElement(By.name("phone2")).getAttribute("value");
     // Выходим из формы редактирования Контакта
     wd.navigate().back();
-    // возвращаем предварительно заполненный список полей Контакта (множество значений) в таблицу контактов
-    return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname)
-            .withNew_adress(address).withEmail1(email1).withEmail2(email2).withEmail3(email3)
-            .withTelHome(telhome).withMobilePhone(mobilPhone).withWorkPhone(workPhone).withPhone2Phone(phone2Phone);
+      // возвращаем предварительно заполненный список полей Контакта (множество значений) в таблицу контактов
+      return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname)
+              .withNew_adress(address).withEmail1(email1).withEmail2(email2).withEmail3(email3).withTelHome(telhome)
+              .withMobilePhone(mobilPhone).withWorkPhone(workPhone).withPhone2Phone(phone2Phone);
   }
 // ЭТО ВАРИАНТ ПРЕДЫДУЩЕГО ЗАДАНИЯ 11
   /*
@@ -171,7 +180,8 @@ public class ContactHelper extends HelperBase {
   */
 
   // ЭТО ВАРИАНТЫ ВЫБОРА КОНТАКТА по ЗАДАННОМУ ИДЕНТИФИКАТОРУ
-  public void initContactModificationById(int id) {
+  public void initContactModificationById(int id, int index, int v) {
+    if (v == 0) {
     // МЕТОД ПОСЛЕДВАТЕЛЬНЫХ ПРИБЛИЖЕНИЙ
     // ищем checkbox
     WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']", id)));
@@ -180,7 +190,10 @@ public class ContactHelper extends HelperBase {
     // Получаем список (множество) td
     List<WebElement> cells = row.findElements(By.tagName("td"));
     // Выбираем нужную колонку (8 номер счет идет от 0)
-    cells.get(7).findElement(By.tagName("a")).click();
+    cells.get(index).findElement(By.tagName("a")).click();
+  } else if (v == 1){
+      wd.findElement(By.cssSelector("input[value='Modify']")).click();
+    }
 
 // И для примерчиков  ( в xpath нумерация с 1 начинается)
 //  wd.findElement(By.xpath(String.format("//input[@value='%s']/../../td[8]/a",id))).click();

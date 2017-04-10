@@ -13,6 +13,7 @@ public class ContactData {
   private String phone2Phone;
   private String allEmails;
   private String allPhones;
+  private String allDetails;
   private String email1;
   private String email2;
   private String email3;
@@ -24,6 +25,15 @@ public class ContactData {
 
   public ContactData withId(int id) {
     this.id = id;
+    return this;
+  }
+
+  public String getAllDetails() {
+    return allDetails;
+  }
+
+  public ContactData withAllDetails(String allDetails) {
+    this.allDetails = allDetails;
     return this;
   }
 

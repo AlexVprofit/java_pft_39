@@ -20,7 +20,7 @@ public class ContactPhoneTests extends TestBase {
     // Загружаем список (множество) контактов  и случайный контакт выделяем
     ContactData contact = app.contact().all().iterator().next();
     // загружаем информацию из формы редактирования контакта в таблицу контактов
-    ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
+    ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact, 0);
 
     //  Это и есть метод обратных проверок (т.е. от формы редактирования контакта contactInfoFromEditForm )
     assertThat(cleanedAe(contact.getNew_adress()), equalTo(cleanedAe(contactInfoFromEditForm.getNew_adress())));
