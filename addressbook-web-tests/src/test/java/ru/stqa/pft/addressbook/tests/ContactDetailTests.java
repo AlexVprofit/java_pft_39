@@ -23,12 +23,12 @@ public class ContactDetailTests extends TestBase {
   @Test
   public void testContactDetails() {
     // Загружаем список (множество) контактов  и случайный контакт выделяем
-    ContactData contact1 = app.contact().all().iterator().next();
+    ContactData contactmain = app.contact().all().iterator().next();
     // Загружаем данные со страницы с подробной информацией о контакте
-    ContactData contact = app.contact().allDetails(contact1, 6);
+    ContactData contact = app.contact().allDetails(contactmain, 6);
 
     // загружаем информацию из формы редактирования контакта в таблицу контактов
-    ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact1, 1);
+    ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contactmain, 1);
 
     //  Проверка (метод обратных проверок (т.е. от формы редактирования контакта contactInfoFromEditForm ))
     assertThat(cleaned(contact.getAllDetails()), equalTo(mergeDetailes(contactInfoFromEditForm)));
