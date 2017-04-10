@@ -22,7 +22,7 @@ public class ContactPhoneTests extends TestBase {
     // загружаем информацию из формы редактирования контакта в таблицу контактов
     ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact, 0);
 
-    //  Это и есть метод обратных проверок (т.е. от формы редактирования контакта contactInfoFromEditForm )
+    //  Метод обратных проверок (т.е. от формы редактирования контакта contactInfoFromEditForm )
     assertThat(cleanedAe(contact.getNew_adress()), equalTo(cleanedAe(contactInfoFromEditForm.getNew_adress())));
     assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));
     assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditForm)));
