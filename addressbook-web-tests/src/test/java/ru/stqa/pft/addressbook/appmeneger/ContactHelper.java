@@ -7,12 +7,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -129,13 +125,17 @@ public class ContactHelper extends HelperBase {
       String lastname = cells.get(1).getText();
       String firstname = cells.get(2).getText();
       String new_adress = cells.get(3).getText();
+//    ОСТАВЛЕНО для ПОВТОРЕНИЯ
 //    Формируем массив строк с разделением на элементы посредством split("\n")
+      /*
       String[] emails = cells.get(4).getText().split("\n");
       String[] phones = cells.get(5).getText().split("\n");
+     */
+      String allEmails = cells.get(4).getText();
+      String allPhones = cells.get(5).getText();
       groupCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
-              .withNew_adress(new_adress).withEmail1(emails[0]).withEmail2(emails[1]).withEmail3(emails[2])
-              .withTelHome(phones[0]).withMobilePhone(phones[1])
-              .withWorkPhone(phones[2]).withPhone2Phone(phones[3]));
+              .withNew_adress(new_adress).withAllEmails(allEmails)
+              .withAllPhones(allPhones));
     }
     return new Contacts(groupCache);
   }
@@ -159,7 +159,7 @@ public class ContactHelper extends HelperBase {
             .withNew_adress(address).withEmail1(email1).withEmail2(email2).withEmail3(email3)
             .withTelHome(telhome).withMobilePhone(mobilPhone).withWorkPhone(workPhone).withPhone2Phone(phone2Phone);
   }
-// ЭТО ВАРИАНТ ПРЕДЫДУЩЕГО ЗАДАНИЯ
+// ЭТО ВАРИАНТ ПРЕДЫДУЩЕГО ЗАДАНИЯ 11
   /*
   public void initContactModificationById(int id) {
     element = wd.findElement(By.cssSelector("a[href='edit.php?id=" +  id + "']"));
@@ -174,7 +174,7 @@ public class ContactHelper extends HelperBase {
   public void initContactModificationById(int id) {
     // МЕТОД ПОСЛЕДВАТЕЛЬНЫХ ПРИБЛИЖЕНИЙ
     // ищем checkbox
-    WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']",id)));
+    WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']", id)));
     // Вверх на 2 уровня чтобы посчитать колонки td т.е. идём  к родителю tr
     WebElement row = checkbox.findElement(By.xpath("./../.."));
     // Получаем список (множество) td

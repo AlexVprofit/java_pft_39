@@ -11,6 +11,8 @@ public class ContactData {
   private String mobilPhone;
   private String workPhone;
   private String phone2Phone;
+  private String allEmails;
+  private String allPhones;
   private String email1;
   private String email2;
   private String email3;
@@ -141,6 +143,24 @@ public class ContactData {
 
   public String getGroup() {
     return group;
+  }
+
+  public String getAllEmails() {
+    return allEmails;
+  }
+
+  public ContactData withAllEmails(String allEmails) {
+    this.allEmails = allEmails;
+    return this;
+  }
+
+  public String getAllPhones() {
+    return allPhones;
+  }
+
+  public ContactData withAllPhones(String allPhones) {
+    this.allPhones = allPhones;
+    return this;
   }
 
   @Override
