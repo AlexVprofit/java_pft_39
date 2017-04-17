@@ -1,12 +1,24 @@
 package ru.stqa.pft.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+// Аннотация для подсказки при формировании тега в файле типа xml
+@XStreamAlias("contact")
+
 public class ContactData {
+  @XStreamOmitField  //подсказка пропустить следующее поле (т.е. id) в XML
   private int id = Integer.MAX_VALUE;
+  @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
   private String firstname;
+  @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
   private String lastname;
   private String title;
   private String company;
+  @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
   private String new_adress;
+  @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
   private String telhome;
   private String mobilPhone;
   private String workPhone;
@@ -14,6 +26,7 @@ public class ContactData {
   private String allEmails;
   private String allPhones;
   private String allDetails;
+  @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
   private String email1;
   private String email2;
   private String email3;

@@ -16,20 +16,20 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupDataGenerator {
+public class ContactDataGenerator {
 
-  @Parameter(names = "-c", description = "Group count")
-  public static int count;
+  @Parameter(names = "-c", description = "Contact count")
+  public int count;
 
   @Parameter(names = "-f", description = "Target file")
-  public static String file;
+  public String file;
 
   @Parameter(names = "-d", description = "Data file")
-  public static String format;
+  public String format;
 
   public static void main(String[] args) throws IOException {
     // Создаём новые объекты
-    GroupDataGenerator generator = new GroupDataGenerator();
+    ContactDataGenerator generator = new ContactDataGenerator();
     // Здесь generator заполняются атрибуты ( count и file), а здесь args опции "-c" "-f"
     // И описываем подробнее сообщение исключения
     //создаем новый объект JCommander
@@ -46,62 +46,62 @@ public class GroupDataGenerator {
 
   private void run() throws IOException {
     // генерация данных
-      List<GroupData> groups = generateGroups(count);
-      // Сохранение в файл
+      List<ContactData> contacts = generateContact(count);
       if (format.equals("csv")) {
-        saveAsCsv(groups, new File(file)); //Т.к.тип был String fileв(@Parameter(names = "-f"..)преобразуем в тип File csv
+        saveAsCsv(contacts, new File(file));
       } else if (format.equals("xml")) {
-        saveAsXml(groups, new File(file)); //Т.к.тип был String fileв(@Parameter(names = "-f"..)преобразуем в тип File xml
+        saveAsXml(contacts, new File(file));
       } else if (format.equals("json")) {
-        saveAsJson(groups, new File(file)); //Т.к.тип был String fileв(@Parameter(names = "-f"..)преобразуем в тип File xml
+        saveAsJson(contacts, new File(file));
       } else {
         System.out.println("Unrecognized format " + format);
       }
   }
-
-  private void saveAsJson(List<GroupData> groups, File file) throws IOException {
+  private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
     // Создаем объект типа Gson и вызываем метод сиреализующий объект
     Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
     // Делаем более читабельное форматирование GsonBuilder().setPrettyPrinting().create()
     // Это excludeFieldsWithoutExposeAnnotation() указывает - пропускать все поля кот. не помеченны аннотацией @Expose
-
-    String json = gson.toJson(groups);
+    String json = gson.toJson(contacts);
     Writer writer = new FileWriter(file);
     writer.write(json);
     writer.close();
   }
 
-  private void saveAsXml(List<GroupData> groups, File file) throws IOException {
+  private void saveAsXml(List<ContactData> contacts, File file) throws IOException {
     // Создание объекта типа new XStream
     XStream xstream = new XStream();
     // Создаем своё имя tag-га вместо проставляемого по умолчанию т.ею прочитать подсказку @XStreamAlias("group")
-    xstream.processAnnotations(GroupData.class); // обработка аннотации в классе GroupData
-    String xml = xstream.toXML(groups); //сиреализация т.е. превращение объекта в строчку xml
+    xstream.processAnnotations(ContactData.class); // обработка аннотации в классе GroupData
+    String xml = xstream.toXML(contacts); //сиреализация т.е. превращение объекта в строчку xml
     Writer writer = new FileWriter(file);
     writer.write(xml);
     writer.close();
   }
 
-  private void saveAsCsv(List<GroupData> groups, File file) throws IOException {
+
+  private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
     System.out.println(new File(".").getAbsoluteFile());
     // Открываем файл на запись , а это throws IOException обработка исключения
     Writer writer = new FileWriter(file);
-    for (GroupData group : groups) {
-      // запись в кэш
-      writer.write(String.format("%s;%s;%s\n", group.getHeader(), group.getHeader(), group.getFooter()));
+    for (ContactData contact : contacts) {
+      writer.write(String.format("%s;%s;%s;%s;%s\n", contact.getLastname(), contact.getFirstname(),
+                                    contact.getNew_adress(), contact.getEmail1(), contact.getTelHome()));
     }
-    // запись в файл из кэша
     writer.close();
   }
-
-  private List<GroupData> generateGroups(int count) {
-    // Создаем новый список объектов типа GroupData
-    List<GroupData> groups = new ArrayList<GroupData>();
+  private List<ContactData> generateContact(int count) {
+    List<ContactData> contacts =new ArrayList<ContactData>();
     for (int i = 0; i < count; i++) {
-      groups.add(new GroupData().withName(String.format("test %s", i))
-              .withHeader(String.format("header %s", i)).withFooter(String.format("footer %s", i)));
+      contacts.add(new ContactData().withLastname(String.format("Alex %s", i))
+              .withFirstname(String.format("AlexBond %s", i)).withNew_adress(String.format("Street %s", i))
+              .withEmail1(String.format("11%s"+"@qqq", i)).withTelHome(String.format("+7 495 %s"+"77-777", i)));
     }
-    return groups;
+    return contacts;
   }
 
 }
+
+
+
+

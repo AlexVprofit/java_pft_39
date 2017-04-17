@@ -1,0 +1,23 @@
+<list>
+  <contact>
+    <firstname>AlexBond 0</firstname>
+    <lastname>Alex 0</lastname>
+    <new__adress>Street 0</new__adress>
+    <telhome>+7 495 077-777</telhome>
+    <email1>110@qqq</email1>
+  </contact>
+  <contact>
+    <firstname>AlexBond 1</firstname>
+    <lastname>Alex 1</lastname>
+    <new__adress>Street 1</new__adress>
+    <telhome>+7 495 177-777</telhome>
+    <email1>111@qqq</email1>
+  </contact>
+  <contact>
+    <firstname>AlexBond 2</firstname>
+    <lastname>Alex 2</lastname>
+    <new__adress>Street 2</new__adress>
+    <telhome>+7 495 277-777</telhome>
+    <email1>112@qqq</email1>
+  </contact>
+</list>

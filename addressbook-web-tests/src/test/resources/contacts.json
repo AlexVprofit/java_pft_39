@@ -1,0 +1,23 @@
+[
+  {
+    "firstname": "AlexBond 0",
+    "lastname": "Alex 0",
+    "new_adress": "Street 0",
+    "telhome": "+7 495 077-777",
+    "email1": "110@qqq"
+  },
+  {
+    "firstname": "AlexBond 1",
+    "lastname": "Alex 1",
+    "new_adress": "Street 1",
+    "telhome": "+7 495 177-777",
+    "email1": "111@qqq"
+  },
+  {
+    "firstname": "AlexBond 2",
+    "lastname": "Alex 2",
+    "new_adress": "Street 2",
+    "telhome": "+7 495 277-777",
+    "email1": "112@qqq"
+  }
+]
