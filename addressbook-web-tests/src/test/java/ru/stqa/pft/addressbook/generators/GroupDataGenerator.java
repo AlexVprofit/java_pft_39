@@ -40,9 +40,8 @@ public class GroupDataGenerator {
   private void run() throws IOException {
     // генерация данных
     List<GroupData> groups = generateGroups(count);
-
     // Сохранение в файл
-    save(groups, new File(file)); // Т.к. тип был  String file преобразуем в тип  new File
+    save(groups, new File(file)); // Т.к.тип был String fileв(@Parameter(names = "-f"...) преобразуем в тип new File
   }
 
   private void save(List<GroupData> groups, File file) throws IOException {
