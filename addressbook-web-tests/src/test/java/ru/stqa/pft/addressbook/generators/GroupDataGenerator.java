@@ -3,6 +3,7 @@ package ru.stqa.pft.addressbook.generators;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.thoughtworks.xstream.XStream;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.io.File;
@@ -19,6 +20,9 @@ public class GroupDataGenerator {
 
   @Parameter(names = "-f", description = "Target file")
   public String file;
+
+  @Parameter(names = "-d", description = "Data file")
+  public String format;
 
   public static void main(String[] args) throws IOException {
     // Создаём новые объекты
@@ -41,10 +45,34 @@ public class GroupDataGenerator {
     // генерация данных
     List<GroupData> groups = generateGroups(count);
     // Сохранение в файл
-    save(groups, new File(file)); // Т.к.тип был String fileв(@Parameter(names = "-f"...) преобразуем в тип new File
+    if (format.equals("csv")) {
+      saveAsCsv(groups, new File(file)); //Т.к.тип был String fileв(@Parameter(names = "-f"..)преобразуем в тип File csv
+    } else if (format.equals("xml")) {
+      saveAsXml(groups, new File(file)); //Т.к.тип был String fileв(@Parameter(names = "-f"..)преобразуем в тип File xml
+    } else if (format.equals("json")) {
+      saveAsJson(groups, new File(file)); //Т.к.тип был String fileв(@Parameter(names = "-f"..)преобразуем в тип File xml
+    } else {
+      System.out.println("Unrecognized format " +format);
+    }
   }
 
-  private void save(List<GroupData> groups, File file) throws IOException {
+  private void saveAsJson(List<GroupData> groups, File file) {
+    
+  }
+
+  private void saveAsXml(List<GroupData> groups, File file) throws IOException {
+    // Создание объекта типа new XStream
+    XStream xstream = new XStream();
+    // Создаем своё имя tag-га вместо проставляемого по умолчанию т.ею прочитать подсказку @XStreamAlias("group")
+    xstream.processAnnotations(GroupData.class); // обработка аннотации в классе GroupData
+    String xml = xstream.toXML(groups); //сиреализация т.е. превращение объекта в строчку xml
+    Writer writer = new FileWriter(file);
+    writer.write(xml);
+    writer.close();
+  }
+
+
+  private void saveAsCsv(List<GroupData> groups, File file) throws IOException {
     System.out.println(new File(".").getAbsoluteFile());
     // Открываем файл на запись , а это throws IOException обработка исключения
     Writer writer = new FileWriter(file);
