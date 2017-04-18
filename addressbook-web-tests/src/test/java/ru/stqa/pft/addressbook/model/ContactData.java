@@ -23,10 +23,11 @@ public class ContactData {
   private String mobilPhone;
   private String workPhone;
   private String phone2Phone;
+  @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
   private String allEmails;
+  @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
   private String allPhones;
   private String allDetails;
-  @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
   private String email1;
   private String email2;
   private String email3;

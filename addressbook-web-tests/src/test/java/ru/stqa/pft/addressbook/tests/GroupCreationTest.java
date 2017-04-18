@@ -8,8 +8,10 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +42,7 @@ public class GroupCreationTest extends TestBase {
     //К каждому объекту  groups.stream().map() применить ф-ю ((g) -> new Object[] {g})кот. этот объект завернет
     //  в массив кот. состоит из одного этого объекта. После применения анонимной ф-ии вызывается collect( кот.
     // из потока собирает обратно список Collectors.toList() и у получившегося списка берется iterator()
-    return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+    return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
   }
 
   @DataProvider
@@ -55,12 +57,13 @@ public class GroupCreationTest extends TestBase {
       line = reader.readLine();
     }
     Gson gson = new Gson();
-    List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType()); // Это типа List<GroupData> .class
+    List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>() {
+    }.getType()); // Это типа List<GroupData> .class
 
     //К каждому объекту  groups.stream().map() применить ф-ю ((g) -> new Object[] {g})кот. этот объект завернет
     //  в массив кот. состоит из одного этого объекта. После применения анонимной ф-ии вызывается collect( кот.
     // из потока собирает обратно список Collectors.toList() и у получившегося списка берется iterator()
-    return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+    return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
   }
 
 

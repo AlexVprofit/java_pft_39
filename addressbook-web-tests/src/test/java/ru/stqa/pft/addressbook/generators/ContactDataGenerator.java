@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -46,17 +45,18 @@ public class ContactDataGenerator {
 
   private void run() throws IOException {
     // генерация данных
-      List<ContactData> contacts = generateContact(count);
-      if (format.equals("csv")) {
-        saveAsCsv(contacts, new File(file));
-      } else if (format.equals("xml")) {
-        saveAsXml(contacts, new File(file));
-      } else if (format.equals("json")) {
-        saveAsJson(contacts, new File(file));
-      } else {
-        System.out.println("Unrecognized format " + format);
-      }
+    List<ContactData> contacts = generateContact(count);
+    if (format.equals("csv")) {
+      saveAsCsv(contacts, new File(file));
+    } else if (format.equals("xml")) {
+      saveAsXml(contacts, new File(file));
+    } else if (format.equals("json")) {
+      saveAsJson(contacts, new File(file));
+    } else {
+      System.out.println("Unrecognized format " + format);
+    }
   }
+
   private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
     // Создаем объект типа Gson и вызываем метод сиреализующий объект
     Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
@@ -86,16 +86,17 @@ public class ContactDataGenerator {
     Writer writer = new FileWriter(file);
     for (ContactData contact : contacts) {
       writer.write(String.format("%s;%s;%s;%s;%s\n", contact.getLastname(), contact.getFirstname(),
-                                    contact.getNew_adress(), contact.getEmail1(), contact.getTelHome()));
+              contact.getNew_adress(), contact.getEmail1(), contact.getTelHome()));
     }
     writer.close();
   }
+
   private List<ContactData> generateContact(int count) {
-    List<ContactData> contacts =new ArrayList<ContactData>();
+    List<ContactData> contacts = new ArrayList<ContactData>();
     for (int i = 0; i < count; i++) {
       contacts.add(new ContactData().withLastname(String.format("Alex %s", i))
               .withFirstname(String.format("AlexBond %s", i)).withNew_adress(String.format("Street %s", i))
-              .withEmail1(String.format("11%s"+"@qqq", i)).withTelHome(String.format("+7 495 %s"+"77-777", i)));
+              .withTelHome(String.format("55%s" + "777", i)));
     }
     return contacts;
   }

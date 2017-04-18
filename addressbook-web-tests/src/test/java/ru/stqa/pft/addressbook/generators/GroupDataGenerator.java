@@ -6,7 +6,6 @@ import com.beust.jcommander.ParameterException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
-import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.io.File;
@@ -46,17 +45,17 @@ public class GroupDataGenerator {
 
   private void run() throws IOException {
     // генерация данных
-      List<GroupData> groups = generateGroups(count);
-      // Сохранение в файл
-      if (format.equals("csv")) {
-        saveAsCsv(groups, new File(file)); //Т.к.тип был String fileв(@Parameter(names = "-f"..)преобразуем в тип File csv
-      } else if (format.equals("xml")) {
-        saveAsXml(groups, new File(file)); //Т.к.тип был String fileв(@Parameter(names = "-f"..)преобразуем в тип File xml
-      } else if (format.equals("json")) {
-        saveAsJson(groups, new File(file)); //Т.к.тип был String fileв(@Parameter(names = "-f"..)преобразуем в тип File xml
-      } else {
-        System.out.println("Unrecognized format " + format);
-      }
+    List<GroupData> groups = generateGroups(count);
+    // Сохранение в файл
+    if (format.equals("csv")) {
+      saveAsCsv(groups, new File(file)); //Т.к.тип был String fileв(@Parameter(names = "-f"..)преобразуем в тип File csv
+    } else if (format.equals("xml")) {
+      saveAsXml(groups, new File(file)); //Т.к.тип был String fileв(@Parameter(names = "-f"..)преобразуем в тип File xml
+    } else if (format.equals("json")) {
+      saveAsJson(groups, new File(file)); //Т.к.тип был String fileв(@Parameter(names = "-f"..)преобразуем в тип File xml
+    } else {
+      System.out.println("Unrecognized format " + format);
+    }
   }
 
   private void saveAsJson(List<GroupData> groups, File file) throws IOException {

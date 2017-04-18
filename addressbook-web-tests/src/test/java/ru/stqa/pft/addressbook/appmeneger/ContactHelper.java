@@ -39,7 +39,7 @@ public class ContactHelper extends HelperBase {
     type(By.name("home"), contactData.getTelHome());
 
     if (creation) {
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+//      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
@@ -135,7 +135,7 @@ public class ContactHelper extends HelperBase {
       String allPhones = cells.get(5).getText();
       groupCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
               .withNew_adress(new_adress).withAllEmails(allEmails)
-              .withAllPhones(allPhones));
+              .withAllPhones(allPhones).withTelHome(allPhones));
     }
     return new Contacts(groupCache);
   }
