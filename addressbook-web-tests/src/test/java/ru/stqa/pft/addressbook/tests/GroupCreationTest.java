@@ -26,44 +26,50 @@ public class GroupCreationTest extends TestBase {
   public Iterator<Object[]> validGroupsXml() throws IOException {   // Итератор массивов объектов
     // Создаем объект типа Reader для чтения тестовых данных из файла
     // Но сначала еще обернем в BufferedReader для получения нужного метода readLine чтения строк из файла
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.xml")));
-    String xml = "";
-    String line = reader.readLine();
-    while (line != null) {
-      xml += line;
-      line = reader.readLine();
+    // Примечание: try()играет роль автоматического закрытия файла (открытого на чтение FileReader или запись writer)
+    try (BufferedReader reader =
+                 new BufferedReader(new FileReader(new File("src/test/resources/groups.xml")))) {
+      String xml = "";
+      String line = reader.readLine();
+      while (line != null) {
+        xml += line;
+        line = reader.readLine();
+      }
+      XStream xstream = new XStream();
+      xstream.processAnnotations(GroupData.class); // обработка аннотации в классе GroupData
+
+      // Явно преобразовали тип (приведение типа) потому что fromXML(xml) возвращает объект какого-то неясного типа
+      List<GroupData> groups = (List<GroupData>) xstream.fromXML(xml);
+
+      //К каждому объекту  groups.stream().map() применить ф-ю ((g) -> new Object[] {g})кот. этот объект завернет
+      //  в массив кот. состоит из одного этого объекта. После применения анонимной ф-ии вызывается collect( кот.
+      // из потока собирает обратно список Collectors.toList() и у получившегося списка берется iterator()
+      return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
-    XStream xstream = new XStream();
-    xstream.processAnnotations(GroupData.class); // обработка аннотации в классе GroupData
-
-    // Явно преобразовали тип (приведение типа) потому что fromXML(xml) возвращает объект какого-то неясного типа
-    List<GroupData> groups = (List<GroupData>) xstream.fromXML(xml);
-
-    //К каждому объекту  groups.stream().map() применить ф-ю ((g) -> new Object[] {g})кот. этот объект завернет
-    //  в массив кот. состоит из одного этого объекта. После применения анонимной ф-ии вызывается collect( кот.
-    // из потока собирает обратно список Collectors.toList() и у получившегося списка берется iterator()
-    return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
   }
 
   @DataProvider
   public Iterator<Object[]> validGroupsJson() throws IOException {   // Итератор массивов объектов
     // Создаем объект типа Reader для чтения тестовых данных из файла
     // Но сначала еще обернем в BufferedReader для получения нужного метода readLine чтения строк из файла
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.json")));
-    String json = "";
-    String line = reader.readLine();
-    while (line != null) {
-      json += line;
-      line = reader.readLine();
-    }
-    Gson gson = new Gson();
-    List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>() {
-    }.getType()); // Это типа List<GroupData> .class
+    // Примечание: try()играет роль автоматического закрытия файла (открытого на чтение FileReader или запись writer)
+    try (BufferedReader reader =
+                 new BufferedReader(new FileReader(new File("src/test/resources/groups.json")))) {
+      String json = "";
+      String line = reader.readLine();
+      while (line != null) {
+        json += line;
+        line = reader.readLine();
+      }
+      Gson gson = new Gson();
+      List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>() {
+      }.getType()); // Это типа List<GroupData> .class
 
-    //К каждому объекту  groups.stream().map() применить ф-ю ((g) -> new Object[] {g})кот. этот объект завернет
-    //  в массив кот. состоит из одного этого объекта. После применения анонимной ф-ии вызывается collect( кот.
-    // из потока собирает обратно список Collectors.toList() и у получившегося списка берется iterator()
-    return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+      //К каждому объекту  groups.stream().map() применить ф-ю ((g) -> new Object[] {g})кот. этот объект завернет
+      //  в массив кот. состоит из одного этого объекта. После применения анонимной ф-ии вызывается collect( кот.
+      // из потока собирает обратно список Collectors.toList() и у получившегося списка берется iterator()
+      return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+    }
   }
 
 

@@ -63,11 +63,11 @@ public class GroupDataGenerator {
     Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
     // Делаем более читабельное форматирование GsonBuilder().setPrettyPrinting().create()
     // Это excludeFieldsWithoutExposeAnnotation() указывает - пропускать все поля кот. не помеченны аннотацией @Expose
-
     String json = gson.toJson(groups);
-    Writer writer = new FileWriter(file);
-    writer.write(json);
-    writer.close();
+    // Примечание: try()играет роль автоматического закрытия файла (открытого на чтение FileReader или запись writer)
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(json);
+    }
   }
 
   private void saveAsXml(List<GroupData> groups, File file) throws IOException {
@@ -76,21 +76,22 @@ public class GroupDataGenerator {
     // Создаем своё имя tag-га вместо проставляемого по умолчанию т.ею прочитать подсказку @XStreamAlias("group")
     xstream.processAnnotations(GroupData.class); // обработка аннотации в классе GroupData
     String xml = xstream.toXML(groups); //сиреализация т.е. превращение объекта в строчку xml
-    Writer writer = new FileWriter(file);
-    writer.write(xml);
-    writer.close();
+    // Примечание: try()играет роль автоматического закрытия файла (открытого на чтение FileReader или запись writer)
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(xml);
+    }
   }
 
   private void saveAsCsv(List<GroupData> groups, File file) throws IOException {
     System.out.println(new File(".").getAbsoluteFile());
+    // Примечание: try()играет роль автоматического закрытия файла (открытого на чтение FileReader или запись writer)
     // Открываем файл на запись , а это throws IOException обработка исключения
-    Writer writer = new FileWriter(file);
-    for (GroupData group : groups) {
-      // запись в кэш
-      writer.write(String.format("%s;%s;%s\n", group.getHeader(), group.getHeader(), group.getFooter()));
+    try (Writer writer = new FileWriter(file)) {
+      for (GroupData group : groups) {
+        // запись в кэш
+        writer.write(String.format("%s;%s;%s\n", group.getHeader(), group.getHeader(), group.getFooter()));
+      }
     }
-    // запись в файл из кэша
-    writer.close();
   }
 
   private List<GroupData> generateGroups(int count) {

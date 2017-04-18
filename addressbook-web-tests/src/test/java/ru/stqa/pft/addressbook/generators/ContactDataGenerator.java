@@ -63,9 +63,10 @@ public class ContactDataGenerator {
     // Делаем более читабельное форматирование GsonBuilder().setPrettyPrinting().create()
     // Это excludeFieldsWithoutExposeAnnotation() указывает - пропускать все поля кот. не помеченны аннотацией @Expose
     String json = gson.toJson(contacts);
-    Writer writer = new FileWriter(file);
-    writer.write(json);
-    writer.close();
+    // Примечание: try()играет роль автоматического закрытия файла (открытого на чтение FileReader или запись writer)
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(json);
+    }
   }
 
   private void saveAsXml(List<ContactData> contacts, File file) throws IOException {
@@ -74,21 +75,23 @@ public class ContactDataGenerator {
     // Создаем своё имя tag-га вместо проставляемого по умолчанию т.ею прочитать подсказку @XStreamAlias("group")
     xstream.processAnnotations(ContactData.class); // обработка аннотации в классе GroupData
     String xml = xstream.toXML(contacts); //сиреализация т.е. превращение объекта в строчку xml
-    Writer writer = new FileWriter(file);
-    writer.write(xml);
-    writer.close();
+    // Примечание: try()играет роль автоматического закрытия файла (открытого на чтение FileReader или запись writer)
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(xml);
+    }
   }
 
 
   private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
     System.out.println(new File(".").getAbsoluteFile());
+    // Примечание: try()играет роль автоматического закрытия файла (открытого на чтение FileReader или запись writer)
     // Открываем файл на запись , а это throws IOException обработка исключения
-    Writer writer = new FileWriter(file);
-    for (ContactData contact : contacts) {
-      writer.write(String.format("%s;%s;%s;%s;%s\n", contact.getLastname(), contact.getFirstname(),
-              contact.getNew_adress(), contact.getEmail1(), contact.getTelHome()));
+    try (Writer writer = new FileWriter(file)) {
+      for (ContactData contact : contacts) {
+        writer.write(String.format("%s;%s;%s;%s;%s\n", contact.getLastname(), contact.getFirstname(),
+                contact.getNew_adress(), contact.getEmail1(), contact.getTelHome()));
+      }
     }
-    writer.close();
   }
 
   private List<ContactData> generateContact(int count) {

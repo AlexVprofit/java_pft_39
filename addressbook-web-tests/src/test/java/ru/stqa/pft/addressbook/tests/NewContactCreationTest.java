@@ -26,44 +26,48 @@ public class NewContactCreationTest extends TestBase {
   public Iterator<Object[]> validContactsXml() throws IOException {   // Итератор массивов объектов
     // Создаем объект типа Reader для чтения тестовых данных из файла
     // Но сначала еще обернем в BufferedReader для получения нужного метода readLine чтения строк из файла
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")));
-    String xml = "";
-    String line = reader.readLine();
-    while (line != null) {
-      xml += line;
-      line = reader.readLine();
+    // Примечание: try()играет роль автоматического закрытия файла (открытого на чтение FileReader или запись writer)
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")))) {
+      String xml = "";
+      String line = reader.readLine();
+      while (line != null) {
+        xml += line;
+        line = reader.readLine();
+      }
+      XStream xstream = new XStream();
+      xstream.processAnnotations(ContactData.class); // обработка аннотации в классе ContactData
+
+      // Явно преобразовали тип (приведение типа) потому что fromXML(xml) возвращает объект какого-то неясного типа
+      List<ContactData> contacts = (List<ContactData>) xstream.fromXML(xml);
+
+      //К каждому объекту  ContactData.stream().map() применить ф-ю ((g) -> new Object[] {g})кот. этот объект завернет
+      //  в массив кот. состоит из одного этого объекта. После применения анонимной ф-ии вызывается collect( кот.
+      // из потока собирает обратно список Collectors.toList() и у получившегося списка берется iterator()
+      return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
-    XStream xstream = new XStream();
-    xstream.processAnnotations(ContactData.class); // обработка аннотации в классе ContactData
-
-    // Явно преобразовали тип (приведение типа) потому что fromXML(xml) возвращает объект какого-то неясного типа
-    List<ContactData> contacts = (List<ContactData>) xstream.fromXML(xml);
-
-    //К каждому объекту  ContactData.stream().map() применить ф-ю ((g) -> new Object[] {g})кот. этот объект завернет
-    //  в массив кот. состоит из одного этого объекта. После применения анонимной ф-ии вызывается collect( кот.
-    // из потока собирает обратно список Collectors.toList() и у получившегося списка берется iterator()
-    return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
   }
 
   @DataProvider
   public Iterator<Object[]> validContactsJson() throws IOException {   // Итератор массивов объектов
     // Создаем объект типа Reader для чтения тестовых данных из файла
     // Но сначала еще обернем в BufferedReader для получения нужного метода readLine чтения строк из файла
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")));
-    String json = "";
-    String line = reader.readLine();
-    while (line != null) {
-      json += line;
-      line = reader.readLine();
-    }
-    Gson gson = new Gson();
-    List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>() {
-    }.getType()); // Это типа List<ContactData> .class
+    // Примечание: try()играет роль автоматического закрытия файла (открытого на чтение FileReader или запись writer)
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")))) {
+      String json = "";
+      String line = reader.readLine();
+      while (line != null) {
+        json += line;
+        line = reader.readLine();
+      }
+      Gson gson = new Gson();
+      List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>() {
+      }.getType()); // Это типа List<ContactData> .class
 
-    //К каждому объекту contacts.stream().map() применить ф-ю ((g) -> new Object[] {g})кот. этот объект завернет
-    //  в массив кот. состоит из одного этого объекта. После применения анонимной ф-ии вызывается collect( кот.
-    // из потока собирает обратно список Collectors.toList() и у получившегося списка берется iterator()
-    return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+      //К каждому объекту contacts.stream().map() применить ф-ю ((g) -> new Object[] {g})кот. этот объект завернет
+      //  в массив кот. состоит из одного этого объекта. После применения анонимной ф-ии вызывается collect( кот.
+      // из потока собирает обратно список Collectors.toList() и у получившегося списка берется iterator()
+      return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+    }
   }
 
 
