@@ -18,7 +18,8 @@ public class ContactData {
   private String company;
   @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
   private String new_adress;
-  @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
+//  @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
+@XStreamOmitField  //подсказка пропустить следующее поле (т.е. id) в XML
   private String telhome;
   private String mobilPhone;
   private String workPhone;

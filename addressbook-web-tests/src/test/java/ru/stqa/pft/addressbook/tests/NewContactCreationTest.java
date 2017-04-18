@@ -23,7 +23,7 @@ public class NewContactCreationTest extends TestBase {
 
   // Провайдер тестовых данных
   @DataProvider
-  public Iterator<Object[]> validContactsXml() throws IOException {   // Итератор массивов объектов
+  public Iterator<Object[]> validContactsXml() throws IOException {   // итератор массивов объектов
     // Создаем объект типа Reader для чтения тестовых данных из файла
     // Но сначала еще обернем в BufferedReader для получения нужного метода readLine чтения строк из файла
     // Примечание: try()играет роль автоматического закрытия файла (открытого на чтение FileReader или запись writer)
@@ -48,7 +48,7 @@ public class NewContactCreationTest extends TestBase {
   }
 
   @DataProvider
-  public Iterator<Object[]> validContactsJson() throws IOException {   // Итератор массивов объектов
+  public Iterator<Object[]> validContactsJson() throws IOException {   // итератор массивов объектов
     // Создаем объект типа Reader для чтения тестовых данных из файла
     // Но сначала еще обернем в BufferedReader для получения нужного метода readLine чтения строк из файла
     // Примечание: try()играет роль автоматического закрытия файла (открытого на чтение FileReader или запись writer)
@@ -81,7 +81,7 @@ public class NewContactCreationTest extends TestBase {
     Contacts before = app.contact().all();
     app.contact().gotoAddNew();
     app.contact().create(contact, true);
-    // ХЭШИРОВАНИЕ по размеру групп , если падает то дальше тест не выполняется
+    // хэширование по размеру групп , если падает то дальше тест не выполняется
     assertThat(app.contact().сount(), equalTo(before.size() + 1));
     Contacts after = app.contact().all();
 

@@ -30,7 +30,7 @@ public class ContactDataGenerator {
     // Создаём новые объекты
     ContactDataGenerator generator = new ContactDataGenerator();
     // Здесь generator заполняются атрибуты ( count и file), а здесь args опции "-c" "-f"
-    // И описываем подробнее сообщение исключения
+    // и описываем подробнее сообщение исключения
     //создаем новый объект JCommander
     JCommander JCommander = new JCommander(generator);
     try {

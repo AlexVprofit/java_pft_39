@@ -19,7 +19,7 @@ import static org.testng.Assert.assertEquals;
  */
 public class GroupModificationTests extends TestBase {
 
-  // Инициализация локальная - Подготовка состояния
+  // инициализация локальная - подготовка состояния
   @BeforeMethod
   public void ensurePreconditions() {
     app.goTo().groupPage();
@@ -35,7 +35,7 @@ public class GroupModificationTests extends TestBase {
     GroupData group = new GroupData().withId(modifyGroup.getId())
             .withName("test1").withHeader("test2 FOR VERIFICATION").withFooter("test3");
     app.group().modify(group);
-    // ХЭШИРОВАНИЕ по размеру групп , если падает то дальше тест не выполняется
+    // хэширование по размеру групп , если падает то дальше тест не выполняется
     assertThat(app.group().count(), equalTo(before.size()));
     Groups after = app.group().all();
     assertThat(after, equalTo(before.without(modifyGroup).withAdded(group)));

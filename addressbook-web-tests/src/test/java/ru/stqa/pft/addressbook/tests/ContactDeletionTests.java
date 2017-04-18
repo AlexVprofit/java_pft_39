@@ -12,7 +12,7 @@ import static org.testng.Assert.assertEquals;
 
 public class ContactDeletionTests extends TestBase {
 
-  // Инициализация локальная - Подготовка состояния
+  // инициализация локальная - подготовка состояния
   @BeforeMethod
   public void ensurePreconditions() {
     // Проверка наличия хоть одной группы
@@ -35,7 +35,7 @@ public class ContactDeletionTests extends TestBase {
     ContactData deletedContact = before.iterator().next();
     // Процедура выбора адреса и его удаление
     app.contact().delete(deletedContact);
-    // ХЭШИРОВАНИЕ по размеру групп , если падает то дальше тест не выполняется
+    // хэширование по размеру групп , если падает то дальше тест не выполняется
     assertThat(app.contact().сount(), equalTo(before.size() - 1));
     Contacts after = app.contact().all();
     // Сравнение списков  до и после удаления

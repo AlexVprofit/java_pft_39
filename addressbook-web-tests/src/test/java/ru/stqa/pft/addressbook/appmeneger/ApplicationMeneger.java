@@ -33,10 +33,10 @@ public class ApplicationMeneger {
   public void init() {
     if (Objects.equals(browser, BrowserType.FIREFOX)) {
 
-      // Потому что ЗАЧУДИЛ !!!
-      FirefoxBinary binary = new FirefoxBinary(new File("C:\\Program Files\\Mozilla Firefox\\firefox.exe"));
-      wd = new FirefoxDriver(binary, new FirefoxProfile());
-      //wd = new FirefoxDriver();
+      // потому что зачудил !!!
+     // FirefoxBinary binary = new FirefoxBinary(new File("C:\\Program Files\\Mozilla Firefox\\firefox.exe"));
+      //wd = new FirefoxDriver(binary, new FirefoxProfile());
+      wd = new FirefoxDriver();
       //  это памятка как пример завел
 
     } else if (Objects.equals(browser, BrowserType.CHROME)) {

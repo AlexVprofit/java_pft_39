@@ -125,7 +125,7 @@ public class ContactHelper extends HelperBase {
       String lastname = cells.get(1).getText();
       String firstname = cells.get(2).getText();
       String new_adress = cells.get(3).getText();
-//    ОСТАВЛЕНО для ПОВТОРЕНИЯ
+//    оставлено для примера
 //    Формируем массив строк с разделением на элементы посредством split("\n")
       /*
       String[] emails = cells.get(4).getText().split("\n");
@@ -135,7 +135,8 @@ public class ContactHelper extends HelperBase {
       String allPhones = cells.get(5).getText();
       groupCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
               .withNew_adress(new_adress).withAllEmails(allEmails)
-              .withAllPhones(allPhones).withTelHome(allPhones));
+              .withAllPhones(allPhones));
+              //.withTelHome(allPhones));
     }
     return new Contacts(groupCache);
   }
@@ -168,7 +169,7 @@ public class ContactHelper extends HelperBase {
               .withNew_adress(address).withEmail1(email1).withEmail2(email2).withEmail3(email3).withTelHome(telhome)
               .withMobilePhone(mobilPhone).withWorkPhone(workPhone).withPhone2Phone(phone2Phone);
   }
-// ЭТО ВАРИАНТ ПРЕДЫДУЩЕГО ЗАДАНИЯ 11
+// Это вариант предыдущего задания 11
   /*
   public void initContactModificationById(int id) {
     element = wd.findElement(By.cssSelector("a[href='edit.php?id=" +  id + "']"));
@@ -179,10 +180,10 @@ public class ContactHelper extends HelperBase {
   }
   */
 
-  // ЭТО ВАРИАНТЫ ВЫБОРА КОНТАКТА по ЗАДАННОМУ ИДЕНТИФИКАТОРУ
+  //  это варианты выбора контакта по заданному иденитификатору
   public void initContactModificationById(int id, int index, int v) {
     if (v == 0) {
-    // МЕТОД ПОСЛЕДВАТЕЛЬНЫХ ПРИБЛИЖЕНИЙ
+    // метод последовательных приближений
     // ищем checkbox
     WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']", id)));
     // Вверх на 2 уровня чтобы посчитать колонки td т.е. идём  к родителю tr
@@ -195,7 +196,7 @@ public class ContactHelper extends HelperBase {
       wd.findElement(By.cssSelector("input[value='Modify']")).click();
     }
 
-// И для примерчиков  ( в xpath нумерация с 1 начинается)
+// и для примерчиков  в xpath нумерация с единицы начинается
 //  wd.findElement(By.xpath(String.format("//input[@value='%s']/../../td[8]/a",id))).click();
 //  wd.findElement(By.xpath(String.format("//tr[.//input[@value='%s']]/td[8]/a",id))).click();
 //  wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']",id))).click();

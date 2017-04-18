@@ -23,7 +23,7 @@ public class GroupCreationTest extends TestBase {
 
   // Провайдер тестовых данных
   @DataProvider
-  public Iterator<Object[]> validGroupsXml() throws IOException {   // Итератор массивов объектов
+  public Iterator<Object[]> validGroupsXml() throws IOException {   // итератор массивов объектов
     // Создаем объект типа Reader для чтения тестовых данных из файла
     // Но сначала еще обернем в BufferedReader для получения нужного метода readLine чтения строк из файла
     // Примечание: try()играет роль автоматического закрытия файла (открытого на чтение FileReader или запись writer)
@@ -49,7 +49,7 @@ public class GroupCreationTest extends TestBase {
   }
 
   @DataProvider
-  public Iterator<Object[]> validGroupsJson() throws IOException {   // Итератор массивов объектов
+  public Iterator<Object[]> validGroupsJson() throws IOException {   // итератор массивов объектов
     // Создаем объект типа Reader для чтения тестовых данных из файла
     // Но сначала еще обернем в BufferedReader для получения нужного метода readLine чтения строк из файла
     // Примечание: try()играет роль автоматического закрытия файла (открытого на чтение FileReader или запись writer)
@@ -78,7 +78,7 @@ public class GroupCreationTest extends TestBase {
     app.goTo().groupPage();
     Groups before = app.group().all();
     app.group().create(group);
-    // ХЭШИРОВАНИЕ по размеру групп , если падает то дальше тест не выполняется
+    // хэширование по размеру групп , если падает то дальше тест не выполняется
     assertThat(app.group().count(), equalTo(before.size() + 1));
     Groups after = app.group().all();
 

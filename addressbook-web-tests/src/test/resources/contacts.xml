@@ -3,18 +3,10 @@
     <firstname>AlexBond 0</firstname>
     <lastname>Alex 0</lastname>
     <new__adress>Street 0</new__adress>
-    <telhome>550777</telhome>
   </contact>
   <contact>
     <firstname>AlexBond 1</firstname>
     <lastname>Alex 1</lastname>
     <new__adress>Street 1</new__adress>
-    <telhome>551777</telhome>
-  </contact>
-  <contact>
-    <firstname>AlexBond 2</firstname>
-    <lastname>Alex 2</lastname>
-    <new__adress>Street 2</new__adress>
-    <telhome>552777</telhome>
   </contact>
 </list>

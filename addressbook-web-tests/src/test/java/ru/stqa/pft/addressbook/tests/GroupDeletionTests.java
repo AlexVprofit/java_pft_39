@@ -16,7 +16,7 @@ import static org.testng.Assert.assertEquals;
 
 public class GroupDeletionTests extends TestBase {
 
-  // Инициализация - Подготовка состояния
+  // инициализация - подготовка состояния
   @BeforeMethod
   public void ensurePreconditions() {
     app.goTo().groupPage();
@@ -28,14 +28,14 @@ public class GroupDeletionTests extends TestBase {
   @Test
   public void testGroupDeletion() {
     Groups before = app.group().all();
-    // Извлекаем элемент из множества
+    // извлекаем элемент из множества
     GroupData deletedGroup = before.iterator().next();
     app.group().delete(deletedGroup);
-    // ХЭШИРОВАНИЕ по размеру групп (Сравнение размеров списков) , если падает то дальше тест не выполняется
+    // хэширование по размеру групп (Сравнение размеров списков) , если падает то дальше тест не выполняется
     assertThat(app.group().count(), equalTo(before.size() - 1));
     Groups after = app.group().all();
 
-    // Сравнение списков  до и после удаления
+    // сравнение списков  до и после удаления
     assertThat(after, equalTo(before.without(deletedGroup)));
   }
 

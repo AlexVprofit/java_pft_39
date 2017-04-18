@@ -1,9 +1,7 @@
 apply plugin: 'java'
-
 repositories {
     mavenCentral()
 }
-
 dependencies {
     compile 'org.testng:testng:6.11'
     compile 'org.seleniumhq.selenium:selenium-java:2.53.1'
@@ -11,4 +9,15 @@ dependencies {
     compile 'com.beust:jcommander:1.64'
     compile 'com.thoughtworks.xstream:xstream:1.4.9'
     compile 'com.google.code.gson:gson:2.8.0'
+}
+task testGroups(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-groups.xml'
+    }
+}
+task testContacts(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-contacts.xml'
+    }
+    systemProrerty 'browser',"${browser}"
 }

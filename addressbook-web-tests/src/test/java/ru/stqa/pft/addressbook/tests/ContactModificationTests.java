@@ -13,7 +13,7 @@ import static org.testng.Assert.assertEquals;
 
 public class ContactModificationTests extends TestBase {
 
-  // Инициализация локальная - Подготовка состояния
+  // инициализация локальная - подготовка состояния
   @BeforeMethod
   public void ensurePreconditions() {
     // Проверка наличия хоть одной группы
@@ -34,9 +34,10 @@ public class ContactModificationTests extends TestBase {
     //  получаем какой-нибудь элемент множества (т.е случайный)
     ContactData modifyContact = before.iterator().next();
     ContactData contact = new ContactData().withId(modifyContact.getId()).withFirstname("Alex").withLastname("Alexbond").withTitle("Title")
-            .withCompany("Education").withNew_adress("new adress FOR VERIFICATION 1").withTelHome("12345");
+            .withCompany("Education").withNew_adress("new adress FOR VERIFICATION 1");
+            //.withTelHome("12345");
     app.contact().modify(contact);
-    // ХЭШИРОВАНИЕ по размеру групп , если падает то дальше тест не выполняется
+    // хэширование по размеру групп , если падает то дальше тест не выполняется
     assertThat(app.contact().сount(), equalTo(before.size()));
     Contacts after = app.contact().all();
     assertThat(after, equalTo(before.without(modifyContact).withAdded(contact)));

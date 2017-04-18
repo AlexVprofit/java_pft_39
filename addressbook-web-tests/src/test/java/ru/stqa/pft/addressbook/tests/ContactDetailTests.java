@@ -12,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactDetailTests extends TestBase {
 
-  // Инициализация локальная - Подготовка состояния
+  // инициализация локальная - подготовка состояния
   @BeforeMethod
   public void ensurePreconditions() {
     // На главную страницу контактов
