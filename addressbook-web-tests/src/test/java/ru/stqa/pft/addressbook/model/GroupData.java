@@ -4,18 +4,35 @@ import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAliasType;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 // Аннотация для подсказки при формировании тега в файле типа xml
 @XStreamAlias("group")
+@Entity
+@Table(name = "group_list")
 
 public class GroupData {
   @XStreamOmitField  //подсказка пропустить следующее поле (т.е. id) в XML
+  @Id
+  @Column(name = "group_id")
   private int id = Integer.MAX_VALUE;
   @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
+  @Column(name = "group_name")
   private String name;
   @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
+
+  @Column(name = "group_header")
+  @Type(type = "text")
   private String header;
   @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
+
+  @Column(name = "group_footer")
+  @Type(type = "text")
   private String footer;
 
   public int getId() {

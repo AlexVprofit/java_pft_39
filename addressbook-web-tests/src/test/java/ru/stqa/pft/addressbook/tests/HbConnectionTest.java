@@ -38,7 +38,7 @@ public class HbConnectionTest {
     //  код для извлечения инфы из бд
     Session session = sessionFactory.openSession();
     session.beginTransaction();
-    List result = session.createQuery( "from GroupDate" ).list(); // здесь вместо sql исп-ся oql(язык запроса объектов)
+    List result = session.createQuery( "from GroupData" ).list(); // здесь вместо sql исп-ся oql(язык запроса объектов)
     for ( GroupData group : (List<GroupData>) result ) {
       System.out.println( group );
     }
