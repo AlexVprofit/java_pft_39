@@ -79,7 +79,7 @@ public class GroupHelper extends HelperBase {
     new NavigationHelper(wd).groupPage();
 //    if (!isThereAGroup()) {
     // Альтернативный вариант проверки наличия списка объектов GroupData
-    if (all().size() == 0) {
+  if (all().size() == 0) {
       create(data);
       return true;
     }

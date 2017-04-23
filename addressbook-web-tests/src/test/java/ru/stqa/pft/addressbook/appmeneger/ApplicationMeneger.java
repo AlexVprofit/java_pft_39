@@ -30,6 +30,7 @@ public class ApplicationMeneger {
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
   private String browser;
+  private DbHelper dbHelper;
 
   public ApplicationMeneger(String browser) {
     this.browser = browser;
@@ -42,12 +43,13 @@ public class ApplicationMeneger {
     // загружаем файл
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 
-    if (Objects.equals(browser, BrowserType.FIREFOX)) {
+    dbHelper = new DbHelper(); // инициализация помощника
 
+    if (Objects.equals(browser, BrowserType.FIREFOX)) {
       // потому что зачудил !!!
-     // FirefoxBinary binary = new FirefoxBinary(new File("C:\\Program Files\\Mozilla Firefox\\firefox.exe"));
-      //wd = new FirefoxDriver(binary, new FirefoxProfile());
-      wd = new FirefoxDriver();
+     FirefoxBinary binary = new FirefoxBinary(new File("C:\\Program Files\\Mozilla Firefox\\firefox.exe"));
+     wd = new FirefoxDriver(binary, new FirefoxProfile());
+//      wd = new FirefoxDriver();
       //  это памятка как пример завел
 
     } else if (Objects.equals(browser, BrowserType.CHROME)) {
@@ -79,6 +81,11 @@ public class ApplicationMeneger {
 
   public ContactHelper contact() {
     return contactHelper;
+  }
+
+  // создаем метод кот. возвращает этого помощника
+  public DbHelper db() {
+    return dbHelper;
   }
 
 }

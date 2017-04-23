@@ -22,22 +22,25 @@ public class GroupModificationTests extends TestBase {
   // инициализация локальная - подготовка состояния
   @BeforeMethod
   public void ensurePreconditions() {
-    app.goTo().groupPage();
-    // Предусловие Проверка наличия хоть одной группы
-    // Если при проверке выясниться, что групп нет, то будет созданна группа
-    app.group().check(new GroupData().withName("test1"));
+    if (app.db().groups().size() == 0) {
+      app.goTo().groupPage();
+      // Предусловие Проверка наличия хоть одной группы
+      // Если при проверке выясниться, что групп нет, то будет созданна группа
+      app.group().check(new GroupData().withName("test1"));
+    }
   }
 
   @Test
   public void testGroupModification() {
-    Groups before = app.group().all();
+    Groups before = app.db().groups();
     GroupData modifyGroup = before.iterator().next();
     GroupData group = new GroupData().withId(modifyGroup.getId())
             .withName("test1").withHeader("test2 FOR VERIFICATION").withFooter("test3");
+//    app.goTo().groupPage();
     app.group().modify(group);
     // хэширование по размеру групп , если падает то дальше тест не выполняется
     assertThat(app.group().count(), equalTo(before.size()));
-    Groups after = app.group().all();
+    Groups after = app.db().groups();
     assertThat(after, equalTo(before.without(modifyGroup).withAdded(group)));
   }
 

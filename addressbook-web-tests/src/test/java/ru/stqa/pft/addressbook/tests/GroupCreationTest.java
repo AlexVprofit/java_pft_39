@@ -76,11 +76,11 @@ public class GroupCreationTest extends TestBase {
   @Test(dataProvider = "validGroupsJson")
   public void testGroupCreation(GroupData group) {
     app.goTo().groupPage();
-    Groups before = app.group().all();
+    Groups before = app.db().groups();
     app.group().create(group);
     // хэширование по размеру групп , если падает то дальше тест не выполняется
     assertThat(app.group().count(), equalTo(before.size() + 1));
-    Groups after = app.group().all();
+    Groups after = app.db().groups();
 
     group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
 // Проверка двух объектов по Hamcrest
@@ -93,12 +93,12 @@ public class GroupCreationTest extends TestBase {
   @Test
   public void testBadGroupCreation() {
     app.goTo().groupPage();
-    Groups before = app.group().all();
+    Groups before = app.db().groups();
     GroupData group = new GroupData().withName("test'");
     app.group().create(group);
     // Группа не должна создаться
     assertThat(app.group().count(), equalTo(before.size()));
-    Groups after = app.group().all();
+    Groups after = app.db().groups();
     assertThat(after, equalTo(before));
   }
 
