@@ -2,7 +2,9 @@ package ru.stqa.pft.addressbook.model;
 
 import com.google.common.collect.ForwardingSet;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,6 +23,11 @@ public class Groups extends ForwardingSet<GroupData> {
 
   public Groups() {
     this.delegete = new HashSet<GroupData>();
+  }
+
+  // конструктор кот. по произвольной коллекции строит объект типа groups
+  public Groups(Collection<GroupData> groups) {
+    this.delegete = new HashSet<GroupData>(groups); // строим новый HashSet из коллекции
   }
 
   // Метод delegete Вернет этот объект delegete
@@ -42,7 +49,5 @@ public class Groups extends ForwardingSet<GroupData> {
     groups.remove(group);
     return groups;
   }
-
-
 
 }

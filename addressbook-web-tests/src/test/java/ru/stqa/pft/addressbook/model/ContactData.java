@@ -3,35 +3,71 @@ package ru.stqa.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 // Аннотация для подсказки при формировании тега в файле типа xml
 @XStreamAlias("contact")
+@Entity
+@Table(name = "addressbook")
 
 public class ContactData {
+//  private final HashSet<ContactData> delegate;
+  @Transient
+  protected Set<ContactData> delegate;
+
+
   @XStreamOmitField  //подсказка пропустить следующее поле (т.е. id) в XML
+  @Id
+  @Column(name = "id")
+
   private int id = Integer.MAX_VALUE;
   @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
+  @Column(name = "firstname")
   private String firstname;
   @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
+  @Column(name = "lastname")
   private String lastname;
   private String title;
   private String company;
   @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
+  @Column(name = "address")
+  @Type(type = "text")
   private String new_adress;
 //  @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
-@XStreamOmitField  //подсказка пропустить следующее поле (т.е. id) в XML
+  @XStreamOmitField  //подсказка пропустить следующее поле  в XML
+  @Column(name = "home")
+  @Type(type = "text")
   private String telhome;
+  @Column(name = "mobile")
+  @Type(type = "text")
   private String mobilPhone;
+  @Column(name = "work")
+  @Type(type = "text")
   private String workPhone;
+  @Transient
   private String phone2Phone;
   @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
+  @Transient
   private String allEmails;
   @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
+  @Transient
   private String allPhones;
+  @Transient
   private String allDetails;
+  @Column(name = "email")
+  @Type(type = "text")
   private String email1;
+  @Type(type = "text")
   private String email2;
+  @Type(type = "text")
   private String email3;
+  @Transient
   private String group;
 
   public int getId() {
@@ -51,6 +87,7 @@ public class ContactData {
     this.allDetails = allDetails;
     return this;
   }
+
 
   public ContactData withFirstname(String firstname) {
     this.firstname = firstname;
@@ -209,8 +246,20 @@ public class ContactData {
     if (id != that.id) return false;
     if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
     if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
+    if (title != null ? !title.equals(that.title) : that.title != null) return false;
+    if (company != null ? !company.equals(that.company) : that.company != null) return false;
     if (new_adress != null ? !new_adress.equals(that.new_adress) : that.new_adress != null) return false;
-    return telhome != null ? telhome.equals(that.telhome) : that.telhome == null;
+    if (telhome != null ? !telhome.equals(that.telhome) : that.telhome != null) return false;
+    if (mobilPhone != null ? !mobilPhone.equals(that.mobilPhone) : that.mobilPhone != null) return false;
+    if (workPhone != null ? !workPhone.equals(that.workPhone) : that.workPhone != null) return false;
+    if (phone2Phone != null ? !phone2Phone.equals(that.phone2Phone) : that.phone2Phone != null) return false;
+    if (allEmails != null ? !allEmails.equals(that.allEmails) : that.allEmails != null) return false;
+    if (allPhones != null ? !allPhones.equals(that.allPhones) : that.allPhones != null) return false;
+    if (allDetails != null ? !allDetails.equals(that.allDetails) : that.allDetails != null) return false;
+    if (email1 != null ? !email1.equals(that.email1) : that.email1 != null) return false;
+    if (email2 != null ? !email2.equals(that.email2) : that.email2 != null) return false;
+    if (email3 != null ? !email3.equals(that.email3) : that.email3 != null) return false;
+    return group != null ? group.equals(that.group) : that.group == null;
   }
 
   @Override
@@ -218,8 +267,20 @@ public class ContactData {
     int result = id;
     result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
     result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+    result = 31 * result + (title != null ? title.hashCode() : 0);
+    result = 31 * result + (company != null ? company.hashCode() : 0);
     result = 31 * result + (new_adress != null ? new_adress.hashCode() : 0);
     result = 31 * result + (telhome != null ? telhome.hashCode() : 0);
+    result = 31 * result + (mobilPhone != null ? mobilPhone.hashCode() : 0);
+    result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
+    result = 31 * result + (phone2Phone != null ? phone2Phone.hashCode() : 0);
+    result = 31 * result + (allEmails != null ? allEmails.hashCode() : 0);
+    result = 31 * result + (allPhones != null ? allPhones.hashCode() : 0);
+    result = 31 * result + (allDetails != null ? allDetails.hashCode() : 0);
+    result = 31 * result + (email1 != null ? email1.hashCode() : 0);
+    result = 31 * result + (email2 != null ? email2.hashCode() : 0);
+    result = 31 * result + (email3 != null ? email3.hashCode() : 0);
+    result = 31 * result + (group != null ? group.hashCode() : 0);
     return result;
   }
 }

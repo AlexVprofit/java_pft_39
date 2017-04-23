@@ -7,11 +7,12 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.List;
 
-public class HbConnectionTest {
+public class HbConnectionContTest {
 
   private SessionFactory sessionFactory;
 
@@ -32,16 +33,16 @@ public class HbConnectionTest {
     }
   }
   @Test
-  public void testHbConnectionTest() {
+  public void testHbConnectionContTest() {
 
     //  код для извлечения инфы из бд
     Session session = sessionFactory.openSession();
     session.beginTransaction();
     // здесь вместо sql исп-ся oql(язык запроса объектов)
-    // выводятся записи у кот. в поле deprecated ='0000-00-00' т.е. не удалённые
-    List result = session.createQuery( "from GroupData where deprecated ='0000-00-00'" ).list();
-    for ( GroupData group : (List<GroupData>) result ) {
-      System.out.println( group );
+    // выводятся записи у кот. в поле deprecated ='0000-00-00' т.ею не удалённые
+    List result = session.createQuery( "from ContactData where deprecated ='0000-00-00'" ).list();
+    for (ContactData contact  : (List<ContactData>) result ) {
+      System.out.println( contact );
     }
     session.getTransaction().commit();
     session.close();
