@@ -30,14 +30,14 @@ public class ContactDeletionTests extends TestBase {
   //  @Test(enabled = false)
   @Test
   public void testContactDeletion() {
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     //  получаем какой-нибудь элемент множества (т.е случайный)
     ContactData deletedContact = before.iterator().next();
     // Процедура выбора адреса и его удаление
     app.contact().delete(deletedContact);
     // хэширование по размеру групп , если падает то дальше тест не выполняется
     assertThat(app.contact().сount(), equalTo(before.size() - 1));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     // Сравнение списков  до и после удаления
     assertThat(after, equalTo(before.without(deletedContact)));
   }

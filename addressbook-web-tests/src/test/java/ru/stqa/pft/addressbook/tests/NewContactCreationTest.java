@@ -78,19 +78,20 @@ public class NewContactCreationTest extends TestBase {
 //            .withCompany("Education").withNew_adress("new adress").withTelHome("12345").withGroup("test1");
 
     app.goTo().goHome();
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     app.contact().gotoAddNew();
     app.contact().create(contact, true);
     // хэширование по размеру групп , если падает то дальше тест не выполняется
     assertThat(app.contact().сount(), equalTo(before.size() + 1));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
+    ContactData contactnew =  app.db().contactsid(contact.getId());
 
     // Превращаем список after в поток объектов типа ContactData (а фактически в поток идентификаторов)
     // Написана анонимная фун-я кот. в качестве параметров принимает g , а в качестве результата выдает идентификатор
     // т.е. преобразовали в число  (и получили из объектов типа группа g поток целых чисел) и получили МАХ идентификар
     contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
     assertThat(after, equalTo(
-            before.withAdded(contact)));
+            before.withAdded(contactnew)));
   }
 
   //  @Test(enabled = false)

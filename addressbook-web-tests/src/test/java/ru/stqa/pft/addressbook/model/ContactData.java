@@ -6,9 +6,6 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 // Аннотация для подсказки при формировании тега в файле типа xml
@@ -17,7 +14,7 @@ import java.util.Set;
 @Table(name = "addressbook")
 
 public class ContactData {
-//  private final HashSet<ContactData> delegate;
+  //  private final HashSet<ContactData> delegate;
   @Transient
   protected Set<ContactData> delegate;
 
@@ -39,7 +36,7 @@ public class ContactData {
   @Column(name = "address")
   @Type(type = "text")
   private String new_adress;
-//  @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
+  @Expose // это для формата файлов JSON и это указывает какие поля д.б. включены в файл
   @XStreamOmitField  //подсказка пропустить следующее поле  в XML
   @Column(name = "home")
   @Type(type = "text")

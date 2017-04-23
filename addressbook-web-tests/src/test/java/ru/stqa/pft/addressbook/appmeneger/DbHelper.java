@@ -6,7 +6,6 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.ContactDataId;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.Groups;
 
@@ -46,17 +45,19 @@ public class DbHelper {
     return new Contacts(result);
   }
 
-  public ContactDataId contactsid(int id) {
+  public ContactData contactsid(int id) {
     //  код для извлечения инфы из бд
     Session session = sessionFactory.openSession();
     session.beginTransaction();
-    // здесь вместо sql исп-ся oql(язык запроса объектов) "input[value='" + id + "']"
-    List resultid = session.createQuery( "from ContactData  where id ='" + id + "'").list();
+    // здесь вместо sql исп-ся oql(язык запроса объектов)
+    // выбираем один объект и затем преобразуем в тип ContactData
+//    Object resultid = session.createQuery( "from ContactData  where id ='" + id + "'").getSingleResult();
+    List resultid = session.createQuery( "from ContactData  where deprecated ='0000-00-00'").list();
     session.getTransaction().commit();
     session.close();
-    //return new ContactData(resultid);
-   return new ContactDataId((ContactData) resultid);
+//    return (ContactData) resultid;
+    int index = resultid.size() - 1;
+    return (ContactData) resultid.get(index);
   }
-
 
 }
