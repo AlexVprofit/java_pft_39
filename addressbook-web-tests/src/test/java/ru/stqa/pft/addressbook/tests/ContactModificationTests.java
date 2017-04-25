@@ -32,16 +32,18 @@ public class ContactModificationTests extends TestBase {
     Contacts before = app.db().contacts();
     //  получаем какой-нибудь элемент множества (т.е случайный)
     ContactData modifyContact = before.iterator().next();
-    ContactData contact = new ContactData().withId(modifyContact.getId()).withFirstname("Alex").withLastname("Alexbond").withTitle("Title")
-            .withCompany("Education").withNew_adress("new adress FOR VERIFICATION 1");
+    ContactData contact = new ContactData().withId(modifyContact.getId()).withFirstname("Alex").withLastname("Alexbond")
+            .withTitle("Title").withCompany("Education").withNew_adress("new adress FOR VERIFICATION 1");
     //.withTelHome("12345");
 //    app.contact().gotoAddNew();
     app.contact().modify(contact);
     // хэширование по размеру групп , если падает то дальше тест не выполняется
     assertThat(app.contact().сount(), equalTo(before.size()));
     Contacts after = app.db().contacts();
-    ContactData contactnew = app.db().contactsid(modifyContact.getId());
+    ContactData contactnew = app.db().contactsidmodi(modifyContact.getId());
     assertThat(after, equalTo(before.without(modifyContact).withAdded(contactnew)));
+    // проверка контактов считанных с UI с контактами считаными по запросу с бд
+    verifyContactListInUI();
   }
 
 }

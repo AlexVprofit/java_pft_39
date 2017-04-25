@@ -51,13 +51,24 @@ public class DbHelper {
     session.beginTransaction();
     // здесь вместо sql исп-ся oql(язык запроса объектов)
     // выбираем один объект и затем преобразуем в тип ContactData
-//    Object resultid = session.createQuery( "from ContactData  where id ='" + id + "'").getSingleResult();
     List resultid = session.createQuery( "from ContactData  where deprecated ='0000-00-00'").list();
     session.getTransaction().commit();
     session.close();
-//    return (ContactData) resultid;
     int index = resultid.size() - 1;
     return (ContactData) resultid.get(index);
   }
+
+  public ContactData contactsidmodi(int id) {
+    //  код для извлечения инфы из бд
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    // здесь вместо sql исп-ся oql(язык запроса объектов)
+    // выбираем один объект и затем преобразуем в тип ContactData
+    Object resultid = session.createQuery( "from ContactData  where id ='" + id + "'").getSingleResult();
+    session.getTransaction().commit();
+    session.close();
+    return (ContactData) resultid;
+  }
+
 
 }

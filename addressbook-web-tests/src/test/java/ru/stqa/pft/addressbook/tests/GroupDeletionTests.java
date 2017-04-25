@@ -39,6 +39,8 @@ public class GroupDeletionTests extends TestBase {
 
     // сравнение списков  до и после удаления
     assertThat(after, equalTo(before.without(deletedGroup)));
+    // проверка UI
+    verifyGroupListInUI();
   }
 
 }

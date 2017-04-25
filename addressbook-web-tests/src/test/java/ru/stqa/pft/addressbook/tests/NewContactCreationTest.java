@@ -92,6 +92,8 @@ public class NewContactCreationTest extends TestBase {
     contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
     assertThat(after, equalTo(
             before.withAdded(contactnew)));
+    // проверка контактов считанных с UI с контактами считаными по запросу с бд
+    verifyContactListInUI();
   }
 
   //  @Test(enabled = false)
