@@ -41,10 +41,13 @@ public class HbConnectionContTest {
     // здесь вместо sql исп-ся oql(язык запроса объектов)
     // выводятся записи у кот. в поле deprecated ='0000-00-00' т.ею не удалённые
     List result = session.createQuery( "from ContactData where deprecated ='0000-00-00'" ).list();
-    for (ContactData contact  : (List<ContactData>) result ) {
-      System.out.println( contact );
-    }
     session.getTransaction().commit();
     session.close();
+
+    for (ContactData contact  : (List<ContactData>) result ) {
+      System.out.println( contact );
+      System.out.println(contact.getGroups());
+    }
+
   }
 }

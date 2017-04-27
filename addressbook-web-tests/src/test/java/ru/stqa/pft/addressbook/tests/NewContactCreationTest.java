@@ -7,6 +7,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -77,6 +78,9 @@ public class NewContactCreationTest extends TestBase {
 //    ContactData contact = new ContactData().withFirstname("Alex1").withLastname("Alexbond").withTitle("Title")
 //            .withCompany("Education").withNew_adress("new adress").withTelHome("12345").withGroup("test1");
 
+    Groups groups = app.db().groups(); // извлекли инфу из бд о всех группах, что бы выбрать каккую-то одну из них
+    contact.inGroup(groups.iterator().next()); // помещение контакта в какую-нибудь группу
+
     app.goTo().goHome();
     Contacts before = app.db().contacts();
     app.contact().gotoAddNew();
@@ -102,7 +106,7 @@ public class NewContactCreationTest extends TestBase {
     app.goTo().goHome();
     Contacts before = app.contact().all();
     ContactData contact = new ContactData().withFirstname("Alex1 '").withLastname("Alexbond").withTitle("Title")
-            .withCompany("Education").withNew_adress("new adress").withTelHome("12345").withGroup("test1");
+            .withCompany("Education").withNew_adress("new adress").withTelHome("12345")/*.withGroup("test1")*/;
     app.contact().gotoAddNew();
     app.contact().create(contact, true);
     // Группа не должна создаться

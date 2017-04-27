@@ -5,10 +5,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 // Аннотация для подсказки при формировании тега в файле типа xml
 @XStreamAlias("group")
@@ -33,6 +32,13 @@ public class GroupData {
   @Column(name = "group_footer")
   @Type(type = "text")
   private String footer;
+
+  @ManyToMany(mappedBy = "groups")  // уже не описываем т.к. в ContactData описано, а лишь сообщаем об этом mappedBy = "groups"
+  private Set<ContactData> contacts = new HashSet<ContactData>();
+
+  public Contacts getContacts() {  // создали getter с возвращением объекта типа Contacts
+    return new Contacts(contacts); // преобразовали множество Groups(groups) в объект типа Contacts приэтом создается копия
+  }
 
   public int getId() {
     return id;

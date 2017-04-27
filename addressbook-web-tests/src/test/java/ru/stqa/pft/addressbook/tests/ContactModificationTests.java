@@ -22,7 +22,7 @@ public class ContactModificationTests extends TestBase {
     if (app.db().contacts().size() == 0) {
       app.contact().gotoAddNew();
       app.contact().create(new ContactData().withFirstname("Alex1").withLastname("Alexbond").withTitle("Title")
-              .withCompany("Education").withNew_adress("new adress").withTelHome("12345").withGroup("test1"), true);
+              .withCompany("Education").withNew_adress("new adress").withTelHome("12345")/*.withGroup("test1")*/, true);
     }
   }
 

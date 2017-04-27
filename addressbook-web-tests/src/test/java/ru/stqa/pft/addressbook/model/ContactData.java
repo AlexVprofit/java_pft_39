@@ -6,6 +6,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 // Аннотация для подсказки при формировании тега в файле типа xml
@@ -64,9 +65,17 @@ public class ContactData {
   private String email2;
   @Type(type = "text")
   private String email3;
-  
+
   @Transient
   private String group;
+
+  // пометили аннотацию @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)  // данным параметром (FetchType.EAGER) указываем получить из бд > данных за один заход
+
+  // указываем таблицу связей групп и контактов по именам колонок (inverseJoinColumns обратный столбец)
+  @JoinTable(name = "address_in_groups",
+          joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups = new HashSet<GroupData>();  // инициализируем св-во т.е. создали пустое множество
 
   public int getId() {
     return id;
@@ -147,12 +156,6 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withGroup(String group) {
-    this.group = group;
-    return this;
-  }
-
-
   public String getFirstname() {
     return firstname;
   }
@@ -201,10 +204,6 @@ public class ContactData {
     return email3;
   }
 
-  public String getGroup() {
-    return group;
-  }
-
   public String getAllEmails() {
     return allEmails;
   }
@@ -221,6 +220,10 @@ public class ContactData {
   public ContactData withAllPhones(String allPhones) {
     this.allPhones = allPhones;
     return this;
+  }
+
+  public Groups getGroups() {   // создали getter с возвращением объекта типа Groups
+    return new Groups(groups);  // преобразовали множество Groups(groups) в объект типа Groups приэтом создается копия
   }
 
   @Override
@@ -290,7 +293,8 @@ public class ContactData {
     if (email3 != null && that.email3 != null) {
       if (!email3.equals(that.email3)) { return false; }
     }
-    return group != null ? group.equals(that.group) : that.group == null;
+//    return email3 != null ? email3.equals(that.email3) : that.email3 == null;
+   return group != null ? group.equals(that.group) : that.group == null;
 /*
     if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
     if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
@@ -315,7 +319,6 @@ public class ContactData {
   public int hashCode() {
     int result = id;
     result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-/*
     result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
     result = 31 * result + (title != null ? title.hashCode() : 0);
     result = 31 * result + (company != null ? company.hashCode() : 0);
@@ -331,7 +334,13 @@ public class ContactData {
     result = 31 * result + (email2 != null ? email2.hashCode() : 0);
     result = 31 * result + (email3 != null ? email3.hashCode() : 0);
     result = 31 * result + (group != null ? group.hashCode() : 0);
-*/
     return result;
+  }
+
+
+  public ContactData inGroup(GroupData group) {
+//в сущ.набор групп groups контакта добавляет группу(т.е.результат фун-и как бы помечает контакт как добавленный в какую-то группу)
+    groups.add(group);
+    return this; // возвращает this чтобы вытягивать в цепочки (например контакт в группе такой-то, в группе такой-то...
   }
 }

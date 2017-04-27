@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
 
@@ -39,7 +40,15 @@ public class ContactHelper extends HelperBase {
     type(By.name("home"), contactData.getTelHome());
 
     if (creation) {
-//      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      if (contactData.getGroups().size() > 0) {
+        // проверка выбора одной группы если 1 то будем выбирать из выпадающего списка, если 0 то ничего не выбираем из списка,
+        // если > 1 не валидно
+        Assert.assertTrue(contactData.getGroups().size() == 1);
+      //  добавление цонтакта в какую-нибудь группу
+      new Select(wd.findElement(By.name("new_group")))
+              // выбрали какую-то группу и извлекли имя группы
+              .selectByVisibleText(contactData.getGroups().iterator().next().getName());
+      }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
@@ -85,6 +94,18 @@ public class ContactHelper extends HelperBase {
     returnHomePage();
     refreshHomePage();
   }
+
+  public void createcontactwithgroup(ContactData contact, Groups groups, boolean typ) {
+    fillAddNewFormContact(contact, typ);
+//    type(By.name("firstname"), contact.getFirstname());
+//   type(By.name("lastname"), contact.getLastname());
+
+    inputAddNewFormContact();
+    groupCache = null;
+    returnHomePage();
+    refreshHomePage();
+  }
+
 
   public void modify(ContactData contact) {
     // Процедура выбора адреса и его модификация
@@ -203,4 +224,9 @@ public class ContactHelper extends HelperBase {
 
   }
 
+  public void ContactAddToGroup(int id, String name) {
+    wd.findElement(By.cssSelector("input[value='"+ id + "']")).click(); // выбрали (отметили) контакт в форме
+    new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(name); // в выпадающем списке выбрали имя
+    click(By.name("add")); // активировали кнопку добавить
+  }
 }

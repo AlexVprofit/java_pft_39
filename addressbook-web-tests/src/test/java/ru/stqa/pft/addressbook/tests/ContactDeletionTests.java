@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,11 +20,12 @@ public class ContactDeletionTests extends TestBase {
     app.group().check(new GroupData().withName("test1"));
     // Проверка наличия хоть  одного адреса
     app.goTo().goHome();
+
     if (app.contact().all().size() == 0) {
       app.contact().gotoAddNew();
       app.contact().create(new ContactData().withFirstname("Alex1").withLastname("Alexbond").withTitle("Title")
               .withCompany("Education").withNew_adress("new adress").withTelHome("12345")
-              .withGroup("test1"), true);
+              /*.withGroup("test1")*/, true);
     }
   }
 
