@@ -227,6 +227,13 @@ public class ContactHelper extends HelperBase {
   public void ContactAddToGroup(int id, String name) {
     wd.findElement(By.cssSelector("input[value='"+ id + "']")).click(); // выбрали (отметили) контакт в форме
     new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(name); // в выпадающем списке выбрали имя
-    click(By.name("add")); // активировали кнопку добавить
+    click(By.name("add")); // активировали кнопку добавить группу
+  }
+
+  public void ContactDelToGroup(int id, String name) {
+    selectStringContactById(id); // выбрали контакт который удаляется из группы с именем name
+// в выпадающем списке выбрали имя группы в которую входит сонтакт
+    new Select(wd.findElement(By.name("group"))).selectByVisibleText(name);
+    click(By.name("remote")); // активировали кнопку удалить контакт из выбранной группы с именем name
   }
 }

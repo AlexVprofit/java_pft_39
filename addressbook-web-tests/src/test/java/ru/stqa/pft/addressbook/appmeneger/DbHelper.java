@@ -71,7 +71,7 @@ public class DbHelper {
   }
 
 
-  public Groups contactAddGroups() {
+  public Groups contactAllCountGroups() {
     Session session = sessionFactory.openSession();
     session.beginTransaction();
     List<ContactData> result = session.createQuery("from ContactData where deprecated = '000-00-00'").list();

@@ -37,7 +37,7 @@ public class ContactModificationTests extends TestBase {
     //.withTelHome("12345");
 //    app.contact().gotoAddNew();
     app.contact().modify(contact);
-    // хэширование по размеру групп , если падает то дальше тест не выполняется
+    // хэширование по размеру контактов , если падает то дальше тест не выполняется
     assertThat(app.contact().сount(), equalTo(before.size()));
     Contacts after = app.db().contacts();
     ContactData contactnew = app.db().contactsidmodi(modifyContact.getId());
