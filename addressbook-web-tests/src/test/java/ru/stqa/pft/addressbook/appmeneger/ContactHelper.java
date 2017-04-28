@@ -44,10 +44,10 @@ public class ContactHelper extends HelperBase {
         // проверка выбора одной группы если 1 то будем выбирать из выпадающего списка, если 0 то ничего не выбираем из списка,
         // если > 1 не валидно
         Assert.assertTrue(contactData.getGroups().size() == 1);
-      //  добавление цонтакта в какую-нибудь группу
-      new Select(wd.findElement(By.name("new_group")))
-              // выбрали какую-то группу и извлекли имя группы
-              .selectByVisibleText(contactData.getGroups().iterator().next().getName());
+        //  добавление цонтакта в какую-нибудь группу
+        new Select(wd.findElement(By.name("new_group")))
+                // выбрали какую-то группу и извлекли имя группы
+                .selectByVisibleText(contactData.getGroups().iterator().next().getName());
       }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
@@ -157,7 +157,7 @@ public class ContactHelper extends HelperBase {
       groupCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
               .withNew_adress(new_adress).withAllEmails(allEmails)
               .withAllPhones(allPhones));
-              //.withTelHome(allPhones));
+      //.withTelHome(allPhones));
     }
     return new Contacts(groupCache);
   }
@@ -165,8 +165,8 @@ public class ContactHelper extends HelperBase {
 
   public ContactData allDetails(ContactData contact, int index) {
     //  выбираем страницу с подробной информацией о контакте Details
-   initContactModificationById(contact.getId(),index,0);
-   String alldetails =wd.findElement(By.xpath("//*[@id='content']")).getText();
+    initContactModificationById(contact.getId(), index, 0);
+    String alldetails = wd.findElement(By.xpath("//*[@id='content']")).getText();
     // возвращаем предварительно заполненную подробную информацию о Контакте
     return new ContactData().withId(contact.getId()).withAllDetails(alldetails);
   }
@@ -185,10 +185,10 @@ public class ContactHelper extends HelperBase {
     String phone2Phone = wd.findElement(By.name("phone2")).getAttribute("value");
     // Выходим из формы редактирования Контакта
     wd.navigate().back();
-      // возвращаем предварительно заполненный список полей Контакта (множество значений) в таблицу контактов
-      return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname)
-              .withNew_adress(address).withEmail1(email1).withEmail2(email2).withEmail3(email3).withTelHome(telhome)
-              .withMobilePhone(mobilPhone).withWorkPhone(workPhone).withPhone2Phone(phone2Phone);
+    // возвращаем предварительно заполненный список полей Контакта (множество значений) в таблицу контактов
+    return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname)
+            .withNew_adress(address).withEmail1(email1).withEmail2(email2).withEmail3(email3).withTelHome(telhome)
+            .withMobilePhone(mobilPhone).withWorkPhone(workPhone).withPhone2Phone(phone2Phone);
   }
 // Это вариант предыдущего задания 11
   /*
@@ -204,16 +204,16 @@ public class ContactHelper extends HelperBase {
   //  это варианты выбора контакта по заданному иденитификатору
   public void initContactModificationById(int id, int index, int v) {
     if (v == 0) {
-    // метод последовательных приближений
-    // ищем checkbox
-    WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']", id)));
-    // Вверх на 2 уровня чтобы посчитать колонки td т.е. идём  к родителю tr
-    WebElement row = checkbox.findElement(By.xpath("./../.."));
-    // Получаем список (множество) td
-    List<WebElement> cells = row.findElements(By.tagName("td"));
-    // Выбираем нужную колонку (8 номер счет идет от 0)
-    cells.get(index).findElement(By.tagName("a")).click();
-  } else if (v == 1){
+      // метод последовательных приближений
+      // ищем checkbox
+      WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']", id)));
+      // Вверх на 2 уровня чтобы посчитать колонки td т.е. идём  к родителю tr
+      WebElement row = checkbox.findElement(By.xpath("./../.."));
+      // Получаем список (множество) td
+      List<WebElement> cells = row.findElements(By.tagName("td"));
+      // Выбираем нужную колонку (8 номер счет идет от 0)
+      cells.get(index).findElement(By.tagName("a")).click();
+    } else if (v == 1) {
       wd.findElement(By.cssSelector("input[value='Modify']")).click();
     }
 
@@ -225,15 +225,15 @@ public class ContactHelper extends HelperBase {
   }
 
   public void ContactAddToGroup(int id, String name) {
-    wd.findElement(By.cssSelector("input[value='"+ id + "']")).click(); // выбрали (отметили) контакт в форме
+    wd.findElement(By.cssSelector("input[value='" + id + "']")).click(); // выбрали (отметили) контакт в форме
     new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(name); // в выпадающем списке выбрали имя
     click(By.name("add")); // активировали кнопку добавить группу
   }
 
-  public void ContactDelToGroup(int id, String name) {
-    selectStringContactById(id); // выбрали контакт который удаляется из группы с именем name
+  public void ContactDelToGroup(int id, String text) {
 // в выпадающем списке выбрали имя группы в которую входит сонтакт
-    new Select(wd.findElement(By.name("group"))).selectByVisibleText(name);
-    click(By.name("remote")); // активировали кнопку удалить контакт из выбранной группы с именем name
+    new Select(wd.findElement(By.name("group"))).selectByVisibleText(text);
+    selectStringContactById(id); // выбрали контакт который удаляется из группы с именем name
+    click(By.name("remove")); // активировали кнопку удалить контакт из выбранной группы с именем name
   }
 }

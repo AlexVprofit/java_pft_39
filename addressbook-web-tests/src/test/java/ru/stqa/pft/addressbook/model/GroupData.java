@@ -33,7 +33,8 @@ public class GroupData {
   @Type(type = "text")
   private String footer;
 
-  @ManyToMany(mappedBy = "groups")  // уже не описываем т.к. в ContactData описано, а лишь сообщаем об этом mappedBy = "groups"
+  @ManyToMany(mappedBy = "groups")
+  // уже не описываем т.к. в ContactData описано, а лишь сообщаем об этом mappedBy = "groups"
   private Set<ContactData> contacts = new HashSet<ContactData>();
 
   public Contacts getContacts() {  // создали getter с возвращением объекта типа Contacts

@@ -28,33 +28,37 @@ public class ContactDelGroupTests extends TestBase {
                       .withCompany("Education").withNew_adress("new adress").withTelHome("12345")
               /*.withGroup("test1")*/, true);
     }
-
+    // проверка наличия контакта  в группе
+    Contacts beforecontact = app.db().contacts(); //список контактов из бд
+    ContactData contactForGroup = beforecontact.iterator().next(); // выбор произвольного контакта
+    if (contactForGroup.getGroups().size() == 0) { // контакт не входит ни в одну из  групп, добавлеем в любую группу
+      Groups group = app.db().groups();       //список групп из бд
+      GroupData groupForContact = group.iterator().next();       // выбор произвольной группы
+      app.contact().ContactAddToGroup(contactForGroup.getId(), groupForContact.getName());
+      app.goTo().goHome();
+    }
   }
 
   @Test
   public void testContactDelGroup() {
     Contacts beforecontact = app.db().contacts(); //список контактов из бд
-    Groups group = app.db().groups();       //список групп из бд
     ContactData contactForGroup = beforecontact.iterator().next(); // выбор произвольного контакта
     Groups beforeInGroups = app.db().contactAllCountGroups(); // до удаления контакта в группы
+    String name = contactForGroup.getGroups().iterator().next().getName();
     app.goTo().goHome();
-    if (contactForGroup.getGroups().size() > 0) {
-      String name = contactForGroup.getGroups().iterator().next().getName();
-      app.contact().ContactDelToGroup(contactForGroup.getId(), name); // удаление контакта из группы
+    app.contact().ContactDelToGroup(contactForGroup.getId(), name); // удаление контакта из группы
 
-      // группа из которой удалили контакт
-      GroupData groupForContact = contactForGroup.getGroups()
-              .stream().filter(g -> g.getName().equals(name)).findFirst().get();
+    // группа из которой удалили контакт
+    GroupData groupForContact = contactForGroup.getGroups()
+            .stream().filter(g -> g.getName().equals(name)).findFirst().get();
 
-      Contacts aftercontact = app.db().contacts();
-      // хэширование по размеру контактов , если падает то дальше тест не выполняется
-      assertThat(aftercontact.size(), equalTo(beforecontact.size() - 1)); // проверка на совпадение колич-ва контактов
+    Contacts aftercontact = app.db().contacts();
+    // хэширование по размеру контактов , если падает то дальше тест не выполняется
+    assertThat(aftercontact.size(), equalTo(beforecontact.size())); // проверка на совпадение колич-ва контактов
 
-      Groups afterInGrous = app.db().contactAllCountGroups(); // после удаление контакта из группы
-      // проверка на соответствие
-      assertThat((afterInGrous), equalTo(new Groups(beforeInGroups.without(groupForContact))));
-    }
-
+    Groups afterInGrous = app.db().contactAllCountGroups(); // после удаление контакта из группы
+    // проверка на соответствие
+    assertThat((afterInGrous), equalTo(new Groups(beforeInGroups.without(groupForContact))));
   }
 
-  }
+}

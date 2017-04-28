@@ -70,7 +70,8 @@ public class ContactData {
   private String group;
 
   // пометили аннотацию @ManyToMany
-  @ManyToMany(fetch = FetchType.EAGER)  // данным параметром (FetchType.EAGER) указываем получить из бд > данных за один заход
+  @ManyToMany(fetch = FetchType.EAGER)
+  // данным параметром (FetchType.EAGER) указываем получить из бд > данных за один заход
 
   // указываем таблицу связей групп и контактов по именам колонок (inverseJoinColumns обратный столбец)
   @JoinTable(name = "address_in_groups",
@@ -246,55 +247,87 @@ public class ContactData {
 
     if (id != that.id) return false;
     if (firstname != null && that.firstname != null) {
-      if (!firstname.equals(that.firstname)) { return false; }
+      if (!firstname.equals(that.firstname)) {
+        return false;
+      }
     }
     if (lastname != null && that.lastname != null) {
-      if (!lastname.equals(that.lastname)) { return false; }
+      if (!lastname.equals(that.lastname)) {
+        return false;
+      }
     }
     if (title != null && that.title != null) {
-      if (!title.equals(that.title)) { return false; }
+      if (!title.equals(that.title)) {
+        return false;
+      }
     }
     if (company != null && that.company != null) {
-      if (!company.equals(that.company)) { return false; }
+      if (!company.equals(that.company)) {
+        return false;
+      }
     }
     if (new_adress != null && that.new_adress != null) {
-      if (!new_adress.equals(that.new_adress)) { return false; }
+      if (!new_adress.equals(that.new_adress)) {
+        return false;
+      }
     }
     if (telhome != null && that.telhome != null) {
-      if (!telhome.equals(that.telhome)) { return false; }
+      if (!telhome.equals(that.telhome)) {
+        return false;
+      }
     }
     if (mobilPhone != null && that.mobilPhone != null) {
-      if (!mobilPhone.equals(that.mobilPhone)) { return false; }
+      if (!mobilPhone.equals(that.mobilPhone)) {
+        return false;
+      }
     }
     if (workPhone != null && that.workPhone != null) {
-      if (!workPhone.equals(that.workPhone)) { return false; }
+      if (!workPhone.equals(that.workPhone)) {
+        return false;
+      }
     }
     if (title != null && that.title != null) {
-      if (!title.equals(that.title)) { return false; }
+      if (!title.equals(that.title)) {
+        return false;
+      }
     }
     if (phone2Phone != null && that.phone2Phone != null) {
-      if (!phone2Phone.equals(that.phone2Phone)) { return false; }
+      if (!phone2Phone.equals(that.phone2Phone)) {
+        return false;
+      }
     }
     if (allEmails != null && that.allEmails != null) {
-      if (!allEmails.equals(that.allEmails)) { return false; }
+      if (!allEmails.equals(that.allEmails)) {
+        return false;
+      }
     }
     if (allPhones != null && that.allPhones != null) {
-      if (!allPhones.equals(that.allPhones)) { return false; }
+      if (!allPhones.equals(that.allPhones)) {
+        return false;
+      }
     }
     if (allDetails != null && that.allDetails != null) {
-      if (!allDetails.equals(that.allDetails)) { return false; }
+      if (!allDetails.equals(that.allDetails)) {
+        return false;
+      }
     }
     if (email1 != null && that.email1 != null) {
-      if (!email1.equals(that.email1)) { return false; }
+      if (!email1.equals(that.email1)) {
+        return false;
+      }
     }
     if (email2 != null && that.email2 != null) {
-      if (!email2.equals(that.email2)) { return false; }
+      if (!email2.equals(that.email2)) {
+        return false;
+      }
     }
     if (email3 != null && that.email3 != null) {
-      if (!email3.equals(that.email3)) { return false; }
+      if (!email3.equals(that.email3)) {
+        return false;
+      }
     }
 //    return email3 != null ? email3.equals(that.email3) : that.email3 == null;
-   return group != null ? group.equals(that.group) : that.group == null;
+    return group != null ? group.equals(that.group) : that.group == null;
 /*
     if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
     if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
