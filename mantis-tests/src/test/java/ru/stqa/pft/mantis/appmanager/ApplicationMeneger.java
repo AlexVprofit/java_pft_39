@@ -23,6 +23,7 @@ public class ApplicationMeneger {
 
   private String browser;
   private RegistrationHelper registrationHelper;
+  private FtpHelper ftp;
 
   public ApplicationMeneger(String browser) {
     this.browser = browser;
@@ -56,6 +57,14 @@ public class ApplicationMeneger {
        registrationHelper = new RegistrationHelper(this); // менеджер нанимает помшника и передаёт ссылку на самого себя
     }
     return registrationHelper;
+  }
+
+  public FtpHelper ftp() {
+    // инициализируем метод один раз
+    if(ftp == null) {
+      ftp = new FtpHelper(this);
+    }
+    return ftp;
   }
 
   public WebDriver getDriver() { // драйвер браузера инициализируется если к нему кто-то обратиться через getDriver() {
