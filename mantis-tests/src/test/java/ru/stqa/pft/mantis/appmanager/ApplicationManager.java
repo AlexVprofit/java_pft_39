@@ -8,7 +8,6 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,7 +15,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-public class ApplicationMeneger {
+public class ApplicationManager {
 
   private final Properties properties;
   private WebDriver wd;
@@ -24,10 +23,11 @@ public class ApplicationMeneger {
   private String browser;
   private RegistrationHelper registrationHelper;
   private FtpHelper ftp;
+  private MailHelper mailHelper;
 
-  public ApplicationMeneger(String browser) {
+  public ApplicationManager(String browser) {
     this.browser = browser;
-    // создали обект и сохранили в поле этого класса class ApplicationMeneger
+    // создали обект и сохранили в поле этого класса class ApplicationManager
     properties = new Properties();
   }
 
@@ -68,7 +68,7 @@ public class ApplicationMeneger {
   }
 
   public WebDriver getDriver() { // драйвер браузера инициализируется если к нему кто-то обратиться через getDriver() {
-    if (wd == null) {
+    if (wd == null) { // инициализируем драйвер если он раньше небыл инициализирован
       if (Objects.equals(browser, BrowserType.FIREFOX)) {
         // потому что зачудил !!!
         FirefoxBinary binary = new FirefoxBinary(new File("C:\\Program Files\\Mozilla Firefox\\firefox.exe"));
@@ -88,4 +88,12 @@ public class ApplicationMeneger {
     }
     return wd;
   }
+  // механизм реализации ленивой инициализации  для MailHelper
+  public MailHelper mail() {
+    if (mailHelper == null) {
+      mailHelper = new MailHelper(this);
+    }
+    return mailHelper;
+  }
+
 }

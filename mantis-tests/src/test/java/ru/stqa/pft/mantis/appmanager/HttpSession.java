@@ -10,16 +10,16 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import sun.net.www.http.HttpClient;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HttpSession {
   private CloseableHttpClient httpclient;
-  private ApplicationMeneger app;
+  private ApplicationManager app;
 
-  public HttpSession(ApplicationMeneger app) {
+  public HttpSession(ApplicationManager app) {
     this.app = app;
     // создали новую сессию по протоколу Http
     // т.е. создали объект для запроса на сервер со стратегией перенаправления LaxRedirectStrategy()

@@ -3,16 +3,16 @@ package ru.stqa.pft.mantis.tests;
 import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-import ru.stqa.pft.mantis.appmanager.ApplicationMeneger;
+import ru.stqa.pft.mantis.appmanager.ApplicationManager;
 
 import java.io.File;
 import java.io.IOException;
 
 public class TestBase {
 
-//  protected static final ApplicationMeneger app = new ApplicationMeneger(BrowserType.FIREFOX);
-  protected static final ApplicationMeneger app
-        = new ApplicationMeneger(System.getProperty("browser", BrowserType.FIREFOX));
+//  protected static final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
+  public static final ApplicationManager app
+        = new ApplicationManager(System.getProperty("browser", BrowserType.FIREFOX));
 
   @BeforeSuite  // инициализация метода
   public void setUp() throws Exception {
