@@ -26,6 +26,7 @@ public class ApplicationManager {
   private MailHelper mailHelper;
   private DbHelper dbHelper;
   private ChangePasswordHelper changePasswordHelper;
+  private ChangePassHelper changeHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -93,6 +94,12 @@ public class ApplicationManager {
     }
     return changePasswordHelper;
   }
+  public ChangePassHelper change() {
+    if (changeHelper == null) {
+      changeHelper = new ChangePassHelper(this);
+    }
+    return changeHelper;
+  }
 
   public WebDriver getDriver() { // драйвер браузера инициализируется если к нему кто-то обратиться через getDriver() {
     if (wd == null) { // инициализируем драйвер если он раньше небыл инициализирован
@@ -109,7 +116,8 @@ public class ApplicationManager {
         wd = new InternetExplorerDriver();
       }
 
-      wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+//      wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+      wd.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
       wd.get(properties.getProperty("web.baseUrl"));
 
     }

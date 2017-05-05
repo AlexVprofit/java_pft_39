@@ -1,5 +1,5 @@
 package ru.stqa.pft.mantis.tests;
-
+/*
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -51,3 +51,4 @@ public class ChangePasswordTest extends TestBase {
     app.mail().stop();
   }
 }
+*/
