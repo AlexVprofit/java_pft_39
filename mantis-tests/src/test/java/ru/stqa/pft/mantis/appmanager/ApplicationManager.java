@@ -24,6 +24,8 @@ public class ApplicationManager {
   private RegistrationHelper registrationHelper;
   private FtpHelper ftp;
   private MailHelper mailHelper;
+  private DbHelper dbHelper;
+  private ChangePasswordHelper changePasswordHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -35,6 +37,8 @@ public class ApplicationManager {
     String target = System.getProperty("target", "local");
     // загружаем файл
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+//    dbHelper = new DbHelper(); // инициализация помощника
+
   }
 
   public void stop() {
@@ -45,11 +49,11 @@ public class ApplicationManager {
 
   public HttpSession newSession() {
     return new HttpSession(this);
-  }
+  } // новая сессия создается
 
   public String getProperty(String key) {
     return properties.getProperty(key);
-  }
+  } // извлекаем св-во properties
 
   public RegistrationHelper registration() {
     // если не было инициализации, т.е. только один раз инициализируем при обращении к методу registration()
@@ -65,6 +69,29 @@ public class ApplicationManager {
       ftp = new FtpHelper(this);
     }
     return ftp;
+  }
+
+  // механизм реализации ленивой инициализации  для MailHelper
+  public MailHelper mail() {
+    if (mailHelper == null) {
+      mailHelper = new MailHelper(this);
+    }
+    return mailHelper;
+  }
+  // создаем метод кот. возвращает этого помощника
+  public DbHelper db() {
+    if (dbHelper == null) {
+      dbHelper = new DbHelper(this);
+    }
+    return dbHelper;
+  }
+
+  // механизм реализации ленивой инициализации  для ChangePasswordHelper
+  public ChangePasswordHelper changePassword(){
+    if (changePasswordHelper == null) {
+      changePasswordHelper = new ChangePasswordHelper(this);
+    }
+    return changePasswordHelper;
   }
 
   public WebDriver getDriver() { // драйвер браузера инициализируется если к нему кто-то обратиться через getDriver() {
@@ -87,13 +114,6 @@ public class ApplicationManager {
 
     }
     return wd;
-  }
-  // механизм реализации ленивой инициализации  для MailHelper
-  public MailHelper mail() {
-    if (mailHelper == null) {
-      mailHelper = new MailHelper(this);
-    }
-    return mailHelper;
   }
 
 }

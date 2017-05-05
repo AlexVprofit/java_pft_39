@@ -26,6 +26,5 @@ public class RegistrationHelper extends HelperBase {
     type(By.name("password_confirm"), password);// заполняем поля
   //  click(By.cssSelector("input[value='Update User']"));
     click(By.cssSelector("button[class='width-100 width-40 pull-right btn btn-success btn-inverse bigger-110']"));
-
   }
 }
