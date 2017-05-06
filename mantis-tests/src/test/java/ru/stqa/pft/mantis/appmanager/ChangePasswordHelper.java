@@ -19,7 +19,6 @@ public class ChangePasswordHelper extends HelperBase {
     click(By.cssSelector("input[value='Войти']"));
     type(By.name("password"), password);
     click(By.cssSelector("input[value='Войти']"));
-    int i = 1;
 //    click(By.cssSelector("input[value='Зарегистрироваться']"));
   }
 
@@ -35,7 +34,6 @@ public class ChangePasswordHelper extends HelperBase {
     wd.get(confirmationLink);
     type(By.name("password"),newpassword);
     type(By.name("password_confirm"),newpassword);
-    //  click(By.cssSelector("input[value='Update User']"));
     click(By.cssSelector("button[class='width-100 width-40 pull-right btn btn-success btn-inverse bigger-110']"));
   }
 }

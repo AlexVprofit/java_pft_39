@@ -17,7 +17,7 @@ public class ChangePassHelper extends HelperBase {
     super(app);
   }
 
-  public void goToManagePage() {
+  public void goManagePage() {
     wd.get(app.getProperty("web.baseUrl") + "/login_page.php");
     type(By.name("username"), app.getProperty("web.adminLogin"));
     click(By.cssSelector("input[value='Войти']"));
@@ -28,7 +28,7 @@ public class ChangePassHelper extends HelperBase {
 //    wd.get(app.getProperty("web.baseUrl") + "/manage_user_create_page.php");
   }
 
-  public UserData findUserForChange() throws SQLException {
+  public UserData findUser() throws SQLException {
 
     Connection conn = null;
     try {
@@ -56,23 +56,34 @@ public class ChangePassHelper extends HelperBase {
     return user;
   }
 
-  public void resetPassword() throws SQLException {
+  public void resetPassword() throws SQLException, InterruptedException {
     wd.get(app.getProperty("web.baseUrl") + "manage_user_edit_page.php?user_id=" + user.getId());
-    click(By.cssSelector("input[value='Сбросить пароль']"));
+//    click(By.cssSelector("input[value='Сбросить пароль']"));
+//    wd.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
+//    Thread.sleep(1000);
 
+//    WebElement webElem = wd.findElement(By.cssSelector("input[value='Сбросить пароль']"));
+
+//    Actions action = new Actions(wd);
+//    action.moveToElement(webElem).click().perform();
+//    WebDriverWait wait = new WebDriverWait(wd, 20);
+//    final WebElement kload= wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[value='Сбросить пароль']")));
+//    wait.until(ExpectedConditions.stalenessOf(kload));
+
+//    click(By.cssSelector("input[value='Сбросить пароль']"));
+    click(By.xpath("//form[@id='manage-user-reset-form']/fieldset/span/input"));
+//    wd.findElement(By.cssSelector("input[value='Сбросить пароль']")).click();
   }
 
 
   public void changePassword(String newPassword) throws IOException, MessagingException, SQLException {
-    List<MailMessage> mailMessages = app.mail().waitForMail(1, 15000);
+    List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
     String confirmationLink = findConfirmationLink(mailMessages);
     wd.get(confirmationLink);
     type(By.name("password"), newPassword);
     type(By.name("password_confirm"), newPassword);
-//    click(By.cssSelector("input[value='?????']"));
-//    click(By.cssSelector("input[value='Update User']"));
-
-
+    click(By.cssSelector(".width-100.width-40.pull-right.btn.btn-success.btn-inverse.bigger-110"));
+    // http://joxi.ru/gmvljeeCpeWWAa
   }
 
   private String findConfirmationLink(List<MailMessage> mailMessages) throws SQLException {
