@@ -27,6 +27,7 @@ public class ApplicationManager {
   private DbHelper dbHelper;
   private ChangePasswordHelper changePasswordHelper;
   private ChangePassHelper changeHelper;
+  private JamesHelper jamesHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -99,6 +100,13 @@ public class ApplicationManager {
       changeHelper = new ChangePassHelper(this);
     }
     return changeHelper;
+  }
+
+  public JamesHelper james() {
+    if(jamesHelper == null) {
+      jamesHelper = new JamesHelper(this);
+    }
+    return jamesHelper;
   }
 
   public WebDriver getDriver() { // драйвер браузера инициализируется если к нему кто-то обратиться через getDriver() {

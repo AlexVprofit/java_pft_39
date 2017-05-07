@@ -1,7 +1,5 @@
 package ru.stqa.pft.mantis.tests;
 
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.pft.mantis.model.MailMessage;
@@ -14,7 +12,7 @@ import static org.testng.Assert.assertTrue;
 
 public class RegistrationTests extends TestBase {
 
- @BeforeMethod
+ //@BeforeMethod
   public void startMailServer(){
     app.mail().start();
   }
@@ -25,11 +23,14 @@ public class RegistrationTests extends TestBase {
     long now = System.currentTimeMillis();
     String user = String.format("user%s", now);
     String password = "password";
-    String email = String.format("user%s@localhost.localdomain", now);
-    app.registration().start(user, email);
+//    String email = String.format("user%s@localhost.localdomain", now);
+    String email = String.format("user%s@localhost", now);
+    app.james().createUser(user, password);// создание пользователя на почтовом сервере внешнем james()
+    app.registration().start(user, email); //первая часть регистрации
     // ожидание почты 2 письма 　15 сек
-    List<MailMessage> mailMessages = app.mail().waitForMail(2, 15000);
-    // метод извлечения ссылки на письмо  из списка писем отправленных на адрес email
+    //List<MailMessage> mailMessages = app.mail().waitForMail(2, 15000); // получение почты с внутреннего сервера
+    List<MailMessage> mailMessages = app.james().waitForMail(user, password, 60000); // получение почты с james()
+    // метод извлечения ссылки на письмо из списка писем отправленных на адрес email
     String confirmationLink = findConfirmationLink(mailMessages, email);
     app.registration().finish(confirmationLink, password); // завершаем регистрацию
     // проверка входа при помощи помощника по протоколу HTTP
@@ -51,7 +52,7 @@ public class RegistrationTests extends TestBase {
     return regex.getText(mailMessage.text);
   }
 
-  @AfterMethod(alwaysRun = true)
+  //@AfterMethod(alwaysRun = true)
   public void stopMailServer(){
     app.mail().stop();
   }
