@@ -3,7 +3,6 @@ package ru.stqa.pft.mantis.tests;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import ru.stqa.pft.mantis.appmanager.HttpSession;
 import ru.stqa.pft.mantis.model.UserData;
 
 import javax.mail.MessagingException;
@@ -21,8 +20,9 @@ public class ChangePasswordTests extends TestBase {
   @BeforeMethod
   public void startMailSrver() throws RemoteException, ServiceException, MalformedURLException {
     app.mail().start();
+    // получение из багтрекера (mantisBT) информации о баг-репорте( исправленный -  trueб нет - false)с заданным идентификатором
+    // и если баг-репорт не исправен выполнение теста пропускается
     skipIfNotFixed(Integer.valueOf(app.getProperty("web.bugIdNotFiuxed").toString()));
-
   }
 
   @Test
@@ -35,8 +35,8 @@ public class ChangePasswordTests extends TestBase {
     app.change().resetPassword();
     app.change().changePassword(newPassword);
     // проверка что пользователь с новым (измененным) паролем зашел на сайт
-    HttpSession session = app.newSession();
-    assertTrue(session.login(user.getLogin(), newPassword));
+//    HttpSession session = app.newSession();
+    assertTrue(app.newSession().login(user.getLogin(), newPassword));
   }
 
   @AfterMethod(alwaysRun = true)

@@ -41,8 +41,9 @@ public class HttpSession {
     CloseableHttpResponse response = httpclient.execute(post); // отправка запроса
     String body = geTextFrom(response); // анализ возвращенного результата запроса т.е. текста body = geTextFrom(response)
     // проверяется по строчке "<span class=\"italic\">%s</span>" действительно ли пользователь username вошел
-//    return body.contains(String.format("<span class=\"italic\">%s</span>", username));
-    return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
+//    String s = String.format("<span class=\"italic\">%s</span>", username);
+    return body.contains(String.format("<span class=\"italic\">%s</span>", username));
+//    return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
   }
 
   private String geTextFrom(CloseableHttpResponse response) throws IOException {
