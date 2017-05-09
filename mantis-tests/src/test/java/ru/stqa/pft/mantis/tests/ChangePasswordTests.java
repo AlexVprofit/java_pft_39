@@ -20,7 +20,7 @@ public class ChangePasswordTests extends TestBase {
   @BeforeMethod
   public void startMailSrver() throws RemoteException, ServiceException, MalformedURLException {
     app.mail().start();
-    // получение из багтрекера (mantisBT) информации о баг-репорте( исправленный -  trueб нет - false)с заданным идентификатором
+    // получение из багтрекера (mantis) информации о баг-репорте( исправленный -  trueб нет - false)с заданным идентификатором
     // и если баг-репорт не исправен выполнение теста пропускается
     skipIfNotFixed(Integer.valueOf(app.getProperty("web.bugIdNotFiuxed").toString()));
   }
