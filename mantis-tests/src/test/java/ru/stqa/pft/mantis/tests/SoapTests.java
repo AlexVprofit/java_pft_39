@@ -1,22 +1,34 @@
 package ru.stqa.pft.mantis.tests;
 
-import biz.futureware.mantis.rpc.soap.client.MantisConnectLocator;
-import biz.futureware.mantis.rpc.soap.client.MantisConnectPortType;
-import biz.futureware.mantis.rpc.soap.client.ProjectData;
 import org.testng.annotations.Test;
+import ru.stqa.pft.mantis.model.Issue;
+import ru.stqa.pft.mantis.model.Project;
 
 import javax.xml.rpc.ServiceException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.rmi.RemoteException;
+import java.util.Set;
 
-public class SoapTests {
+import static org.testng.Assert.assertEquals;
+
+public class SoapTests extends TestBase{
 
   @Test
   public void testGetProjects() throws MalformedURLException, ServiceException, RemoteException { // Получаем список проектов
-    MantisConnectPortType mc = new MantisConnectLocator()
-            .getMantisConnectPort(new URL("http://localhost/mantisbt-1.2.19/api/soap/mantisconnect.php"));
-    // получить список проектов к которым пользователь имеет доступ
-    ProjectData[] projects = mc.mc_projects_get_user_accessible("administrator", "root"); // массив проектов
+    Set<Project> projects = app.soap().getProjects();
+    System.out.println(projects.size()); // выводим количество проектов
+    for (Project project : projects) { // выводим имена проектов
+      System.out.println(project.getName());
+    }
+  }
+
+  // создание баг репортов
+  @Test
+  public void testCreateIssue() throws MalformedURLException, ServiceException, RemoteException {
+    Set<Project> projects = app.soap().getProjects();
+    Issue issue = new Issue().withSummary("Test issue").withDescription("Test issue description")
+            .withProject(projects.iterator().next()); // выбираем какой-то проект
+    Issue created = app.soap().addIssue(issue);// создаем проект
+    assertEquals(issue.getSummary(),created.getSummary());// сравнивание с существующим ( например, сравниваем Summary)
   }
 }

@@ -20,9 +20,10 @@ public class ChangePassHelper extends HelperBase {
   public void goManagePage() {
     wd.get(app.getProperty("web.baseUrl") + "/login_page.php");
     type(By.name("username"), app.getProperty("web.adminLogin"));
-    click(By.cssSelector("input[value='Войти']"));
+//    click(By.cssSelector("input[value='Войти']"));
     type(By.name("password"), app.getProperty("web.adminPassword"));
-    click(By.cssSelector("input[value='Войти']"));
+//    click(By.cssSelector("input[value='Войти']"));
+    click(By.cssSelector("input[value='Login']"));
     wd.get(app.getProperty("web.baseUrl") + "/manage_user_page.php");
 //    wd.get(app.getProperty("web.baseUrl") + "/account_page.php");
 //    wd.get(app.getProperty("web.baseUrl") + "/manage_user_create_page.php");
@@ -71,7 +72,8 @@ public class ChangePassHelper extends HelperBase {
 //    wait.until(ExpectedConditions.stalenessOf(kload));
 
 //    click(By.cssSelector("input[value='Сбросить пароль']"));
-    click(By.xpath("//form[@id='manage-user-reset-form']/fieldset/span/input"));
+//    click(By.xpath("//form[@id='manage-user-reset-form']/fieldset/span/input"));
+    click(By.cssSelector("input[value='Reset Password']"));
 //    wd.findElement(By.cssSelector("input[value='Сбросить пароль']")).click();
   }
 
@@ -82,7 +84,12 @@ public class ChangePassHelper extends HelperBase {
     wd.get(confirmationLink);
     type(By.name("password"), newPassword);
     type(By.name("password_confirm"), newPassword);
-    click(By.cssSelector(".width-100.width-40.pull-right.btn.btn-success.btn-inverse.bigger-110"));
+    //click(By.cssSelector(".width-100.width-40.pull-right.btn.btn-success.btn-inverse.bigger-110"));
+    click(By.cssSelector("input[value='Update User']"));
+//    type(By.name("username"), user.getLogin());
+//    type(By.name("password"), newPassword);
+//   click(By.cssSelector("input[value='Login']"));
+//    wd.get(app.getProperty("web.baseUrl") + "manage_user_edit_page.php?user_id=" + user.getId());
     // http://joxi.ru/gmvljeeCpeWWAa
   }
 
@@ -90,7 +97,6 @@ public class ChangePassHelper extends HelperBase {
     MailMessage mailMessage = mailMessages.get(0);
     VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
     return regex.getText(mailMessage.text);
-
   }
 
 }

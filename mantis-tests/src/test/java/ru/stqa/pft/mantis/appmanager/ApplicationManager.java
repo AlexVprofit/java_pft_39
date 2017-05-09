@@ -28,6 +28,7 @@ public class ApplicationManager {
   private ChangePasswordHelper changePasswordHelper;
   private ChangePassHelper changeHelper;
   private JamesHelper jamesHelper;
+  private SoapHelper soapHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -108,6 +109,14 @@ public class ApplicationManager {
     }
     return jamesHelper;
   }
+  // ленивая инициализация помощника SoapHelper
+  public SoapHelper soap() {
+    if (soapHelper == null) {
+      soapHelper = new SoapHelper(this);
+    }
+    return soapHelper;
+  }
+
 
   public WebDriver getDriver() { // драйвер браузера инициализируется если к нему кто-то обратиться через getDriver() {
     if (wd == null) { // инициализируем драйвер если он раньше небыл инициализирован
