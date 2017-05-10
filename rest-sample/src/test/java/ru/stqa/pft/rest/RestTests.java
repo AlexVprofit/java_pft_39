@@ -19,7 +19,7 @@ public class RestTests {
   @Test
   public void testCreateIssue () throws IOException { //создание новогобаг-репрота в багтрекере Bugify
     Set<Issue> oldIssues = getIssues(); // получаем множество объектов типа Issue
-    Issue newIssue = new Issue().withSubject("Test issue").withDescription("New test issue");// новый объект
+    Issue newIssue = new Issue().withSubject("Test issue Alex").withDescription("New test issue");// новый объект
     int issueId = createIssue(newIssue);
     Set<Issue> newIssues = getIssues(); // получаем множество объектов типа Issue после добавления
     oldIssues.add(newIssue.withId(issueId));// к старому множ-ву добавл. объект
