@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.appmeneger;
 
 
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
@@ -47,7 +48,7 @@ public class ApplicationMeneger {
 
     dbHelper = new DbHelper(); // инициализация помощника
 
-    if ("".equals(properties.getProperty("selenium.server"))) {
+    if ("".equals(properties.getProperty("selenium.server"))) { //
       if (Objects.equals(browser, BrowserType.FIREFOX)) {
         // потому что зачудил !!!
         FirefoxBinary binary = new FirefoxBinary(new File("C:\\Program Files\\Mozilla Firefox\\firefox.exe"));
@@ -63,6 +64,8 @@ public class ApplicationMeneger {
     } else {
       DesiredCapabilities capabilities = new DesiredCapabilities();
       capabilities.setBrowserName(browser);
+      // выбор платформы platform в объекте capabilities
+      capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win7")));
       wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")),capabilities); // удаленный драйвер selenium.server
     }
 
