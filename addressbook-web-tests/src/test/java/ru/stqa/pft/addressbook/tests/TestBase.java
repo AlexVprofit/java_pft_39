@@ -1,7 +1,5 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +26,10 @@ public class TestBase {
   Logger logger = LoggerFactory.getLogger(TestBase.class);  // привязка к классу TestBase.class чтобы видеть откуда вызов идет
 
 //  protected static final ApplicationMeneger app = new ApplicationMeneger(BrowserType.FIREFOX);
+//  protected static final ApplicationMeneger app
+//        = new ApplicationMeneger(System.getProperty("browser", BrowserType.FIREFOX));
   protected static final ApplicationMeneger app
-        = new ApplicationMeneger(System.getProperty("browser", BrowserType.FIREFOX));
+        = new ApplicationMeneger(System.getProperty("browser", BrowserType.CHROME));
 
   @BeforeSuite
   public void setUp() throws Exception {
