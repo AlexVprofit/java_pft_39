@@ -3,6 +3,10 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    agent
+}
+
 dependencies {
     compile 'org.testng:testng:6.11'
     compile 'org.seleniumhq.selenium:selenium-java:2.53.1'
@@ -13,6 +17,8 @@ dependencies {
     compile 'ch.qos.logback:logback-classic:1.2.2' // библиотека для протоколирования
     compile 'mysql:mysql-connector-java:6.0.6'     // драйвер для обращения к бд
     compile 'org.hibernate:hibernate-core:5.2.10.Final' // библиотеки преобразователи объектов orm бд
+    agent "org.aspectj:aspectjweaver:1.8.0"  // зависимости (св-ва) для отчетов allure
+    compile "ru.yandex.qatools.allure:allure-testng-adaptor:1.4.0.RC4"  // зависимости для отчетов allure
 }
 
 task testGroups(type: Test) {
@@ -36,6 +42,12 @@ task testGroups(type: Test) {
         systemProperty 'verifyUI',"${verifyUI}"
     }
 }
+
+testGroups.doFirst { // перед запуском этой задачи testGroups, java машине выставляются спец. опции, 
+                    // например подключение скриншота к отчету Allure
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
+}
+
 
 task testContacts(type: Test) {
     useTestNG {

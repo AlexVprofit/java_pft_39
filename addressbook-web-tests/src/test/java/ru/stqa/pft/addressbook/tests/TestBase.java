@@ -3,10 +3,8 @@ package ru.stqa.pft.addressbook.tests;
 import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.ITestContext;
+import org.testng.annotations.*;
 import ru.stqa.pft.addressbook.appmeneger.ApplicationMeneger;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
@@ -20,7 +18,7 @@ import java.util.stream.Collectors;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-
+@Listeners(MyTestListener.class) // @Listeners аннотация подключает плагин Listener из класса MyTestListener
 public class TestBase {
   // для создания файла протокола тестов
   Logger logger = LoggerFactory.getLogger(TestBase.class);  // привязка к классу TestBase.class чтобы видеть откуда вызов идет
@@ -32,8 +30,11 @@ public class TestBase {
         = new ApplicationMeneger(System.getProperty("browser", BrowserType.CHROME));
 
   @BeforeSuite
-  public void setUp() throws Exception {
+  public void setUp(ITestContext context) throws Exception {
     app.init();
+    // передали контекст выполнения тестов, помещается ссылка на объект ApplicationMeneger в контекст
+    // и MyTestListener сможет её извлечь и через него снимет скриншот
+    context.setAttribute("app", app);
   }
 
   @AfterSuite(alwaysRun = true) // alwaysRun = true нужно чтобы метод всё-равно сработал (чтобы браузер гарантировано остановился)

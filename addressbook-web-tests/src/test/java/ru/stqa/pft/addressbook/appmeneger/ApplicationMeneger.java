@@ -1,7 +1,9 @@
 package ru.stqa.pft.addressbook.appmeneger;
 
 
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
@@ -99,4 +101,10 @@ public class ApplicationMeneger {
     return dbHelper;
   }
 
+// метод получения скриншота
+  public byte[] takeScreeshot() {
+    // преобразовываем webdriver к типу ((TakesScreenshot) wd) указываем тип возвращаемого результата
+    // getScreenshotAs(OutputType.BYTES)
+    return ((TakesScreenshot) wd).getScreenshotAs(OutputType.BYTES);
+  }
 }
