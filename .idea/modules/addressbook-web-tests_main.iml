@@ -19,6 +19,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: mysql:mysql-connector-java:6.0.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.hibernate:hibernate-core:5.2.10.Final" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: ru.yandex.qatools.allure:allure-testng-adaptor:1.4.0.RC4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.robotframework:robotframework:3.0.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.yaml:snakeyaml:1.17" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.seleniumhq.selenium:selenium-chrome-driver:2.53.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.seleniumhq.selenium:selenium-edge-driver:2.53.1" level="project" />
