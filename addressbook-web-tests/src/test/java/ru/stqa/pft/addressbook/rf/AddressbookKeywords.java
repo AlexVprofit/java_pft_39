@@ -9,12 +9,15 @@ import java.io.IOException;
 
 public class AddressbookKeywords {
 
+  public static final String ROBOT_LIBRARY_SCOPE = "GLOBAL"; // общая инициализация библиотеки для всех сценариев
+
   private ApplicationMeneger app;
 
    // описываем ключевые слова Keywords: Init Application Meneger, Stop Application Meneger, Get Group Count, Create Group
 
   public void initApplicationMeneger() throws IOException {
-    app = new ApplicationMeneger(System.getProperty("browser", BrowserType.CHROME));
+//    app = new ApplicationMeneger(System.getProperty("browser", BrowserType.CHROME));
+    app = new ApplicationMeneger(System.getProperty("browser", BrowserType.FIREFOX));
     app.init();
   }
 
