@@ -16,8 +16,8 @@ public class AddressbookKeywords {
    // описываем ключевые слова Keywords: Init Application Meneger, Stop Application Meneger, Get Group Count, Create Group
 
   public void initApplicationMeneger() throws IOException {
-//    app = new ApplicationMeneger(System.getProperty("browser", BrowserType.CHROME));
-    app = new ApplicationMeneger(System.getProperty("browser", BrowserType.FIREFOX));
+    app = new ApplicationMeneger(System.getProperty("browser", BrowserType.CHROME));
+//    app = new ApplicationMeneger(System.getProperty("browser", BrowserType.FIREFOX));
     app.init();
   }
 

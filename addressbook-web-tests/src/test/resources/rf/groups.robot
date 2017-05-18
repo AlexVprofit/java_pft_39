@@ -9,5 +9,5 @@ Can Create Group With Valid Data
     Create Group    test name   test header     test footer
     ${new_count} =    Get Group Count
     ${expected_count} =    Evaluate    ${old_count} + 1
-    Shuold Be Equal As Integer     ${new_count}    ${expected_count}
+    Should Be Equal As Integers     ${new_count}    ${expected_count}
 
