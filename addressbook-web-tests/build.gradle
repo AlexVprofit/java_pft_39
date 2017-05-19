@@ -20,6 +20,9 @@ dependencies {
     agent "org.aspectj:aspectjweaver:1.8.0"  // зависимости (св-ва) для отчетов allure
     compile "ru.yandex.qatools.allure:allure-testng-adaptor:1.4.0.RC4"  // зависимости для отчетов allure
     compile 'org.robotframework:robotframework:3.0.2' // зависимость от RobotFramework
+    compile 'info.cukes:cucumber-java:1.2.5' // описание шагов псевдоестественного языка с помощью аннотаций
+    compile 'info.cukes:cucumber-testng:1.2.5'// для создателя запускателя
+
 }
 
 task testGroups(type: Test) {
